@@ -1,0 +1,10 @@
+# dependencies
+node_modules/
+
+# env (local testing only - the deployed Action uses GitHub Secrets instead)
+.env
+.env.local
+
+# misc
+.DS_Store
+*.log

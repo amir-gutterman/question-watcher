@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Question Watcher</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #3466f6;
+    --accent-2: #059669;
+    --danger: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 32px 20px 80px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  h1 { font-size: 22px; margin: 0; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-top: 4px; max-width: 480px; }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: opacity .15s, transform .1s;
+  }
+  button:hover { opacity: .9; }
+  button:active { transform: scale(.97); }
+  button.primary { background: var(--accent); color: white; }
+  button.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+  button.danger-text { background: transparent; color: var(--danger); padding: 4px 6px; font-weight: 500; }
+  button.small { padding: 6px 10px; font-size: 12px; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  #token-bar {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  #token-bar.show { display: block; }
+  #token-bar p { margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  #token-bar input { width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-size: 13px; margin-bottom: 10px; }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card.disabled { opacity: .55; }
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .qtext { font-size: 14px; font-weight: 600; line-height: 1.4; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+  .badge.PENDING, .badge.UNCHANGED { background: #e2e8f0; color: #475569; }
+  .badge.UPDATED { background: rgba(5,150,105,.14); color: var(--accent-2); }
+  .badge.ERROR { background: rgba(220,38,38,.12); color: var(--danger); }
+  .answer-box { margin-top: 10px; background: var(--panel-2); border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.5; }
+  .error-text { margin-top: 8px; color: var(--danger); font-size: 12px; }
+
+  .actions-row { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .switch { position: relative; width: 36px; height: 21px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 100px; cursor: pointer; transition: .15s; }
+  .slider:before { content: ""; position: absolute; width: 15px; height: 15px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: .15s; }
+  .switch input:checked + .slider { background: var(--accent-2); }
+  .switch input:checked + .slider:before { transform: translateX(15px); }
+
+  .kebab-wrap { position: relative; }
+  .kebab-btn { background: transparent; border: none; color: var(--muted); width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  .kebab-btn:hover { background: var(--panel-2); }
+  .kebab-menu { position: absolute; right: 0; top: 32px; z-index: 10; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; min-width: 150px; padding: 6px; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .kebab-menu.open { display: block; }
+  .kebab-menu button { display: flex; align-items: center; gap: 8px; width: 100%; background: transparent; color: var(--text); font-weight: 500; padding: 8px 10px; border-radius: 6px; text-align: left; font-size: 13px; }
+  .kebab-menu button:hover { background: var(--panel-2); }
+  .kebab-menu button.danger { color: var(--danger); }
+
+  .history { margin-top: 10px; border-left: 2px solid var(--border); padding-left: 12px; display: none; }
+  .history.open { display: block; }
+  .history-item { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .history-item .when { font-weight: 600; color: var(--text); }
+  .link-btn { background: none; border: none; color: var(--accent); font-size: 12px; font-weight: 600; padding: 0; margin-top: 8px; cursor: pointer; }
+
+  .empty { text-align: center; padding: 50px 20px; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px; }
+
+  dialog { border: none; border-radius: 16px; background: var(--panel); color: var(--text); padding: 24px; width: min(460px, 92vw); }
+  dialog::backdrop { background: rgba(15,23,42,.45); }
+  dialog h2 { margin-top: 0; font-size: 17px; }
+  .field { margin-top: 14px; }
+  .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; font-weight: 600; }
+  .field textarea, .field input, .field select { width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-size: 13px; font-family: inherit; }
+  .field textarea { min-height: 80px; resize: vertical; }
+  .field .hint { margin-top: 5px; font-size: 11px; color: var(--muted); }
+  .field-row { display: flex; gap: 10px; }
+  .field-row .field { flex: 1; }
+  .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--text); color: white; padding: 10px 18px; border-radius: 10px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: 90vw; text-align: center; }
+  .toast.show { opacity: 1; }
+  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -1px; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Question Watcher</h1>
+      <div class="subtitle">Monitors your questions and emails you only when the web has something meaningfully new to say. Runs on GitHub Actions - no server, no hosting cost.</div>
+    </div>
+    <div class="header-actions">
+      <button class="ghost small" id="settings-btn">Settings</button>
+      <button class="ghost small" id="check-all-btn">Check all now</button>
+      <button class="primary" id="add-btn">+ Add question</button>
+    </div>
+  </header>
+
+  <div id="token-bar">
+    <p>
+      Paste a GitHub <strong>fine-grained personal access token</strong> scoped to this repo
+      (permissions: <strong>Contents: read/write</strong>, <strong>Actions: read/write</strong>).
+      It's stored only in this browser's local storage and sent directly to the GitHub API -
+      never to any other server.
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one &rarr;</a>
+    </p>
+    <input type="password" id="token-input" placeholder="github_pat_..." />
+    <div style="display:flex; gap:8px;">
+      <button class="primary small" id="save-token">Save token</button>
+      <button class="ghost small" id="clear-token">Clear</button>
+    </div>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<dialog id="question-dialog">
+  <h2 id="dialog-title">Add question</h2>
+  <form id="question-form">
+    <div class="field">
+      <label>Question</label>
+      <textarea name="text" required placeholder='e.g. "Has White Lotus Season 4 received an official release date?"'></textarea>
+      <div class="hint">Free-form, natural language. Be specific - it's researched literally.</div>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="ghost" id="cancel-btn">Cancel</button>
+      <button type="submit" class="primary" id="save-btn">Save question</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="settings-dialog">
+  <h2>Settings</h2>
+  <form id="settings-form">
+    <div class="field">
+      <label>Email address</label>
+      <input name="notifyEmail" type="email" placeholder="you@example.com" />
+      <div class="hint">Where update emails are sent. Leave blank to disable email.</div>
+    </div>
+    <div class="field">
+      <label>Timezone</label>
+      <select name="timezone" id="timezone-select"></select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Day of week</label>
+        <select name="scheduleDayOfWeek">
+          <option value="0">Sunday</option>
+          <option value="1" selected>Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Hour (24h, local)</label>
+        <select name="scheduleHour" id="hour-select"></select>
+      </div>
+    </div>
+    <div class="hint" style="margin-top:10px">
+      The scheduled check runs hourly on GitHub's infrastructure and only does real work in the
+      matching hour above - GitHub does not guarantee scheduled runs fire at the exact minute,
+      so expect it within the hour rather than to the second.
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="ghost" id="settings-cancel-btn">Cancel</button>
+      <button type="submit" class="primary" id="settings-save-btn">Save settings</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const OWNER = "amir-gutterman";
+const REPO = "question-watcher";
+const BRANCH = "main";
+const WORKFLOW = "question-watch.yml";
+const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
+
+const $ = (s) => document.querySelector(s);
+const toast = (msg) => {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3200);
+};
+
+function getToken() { return localStorage.getItem("qw_token") || ""; }
+function setToken(t) { localStorage.setItem("qw_token", t); }
+
+async function ghGet(path) {
+  const res = await fetch(`${API}/contents/${path}?ref=${BRANCH}`, {
+    headers: { Authorization: `Bearer ${getToken()}`, Accept: "application/vnd.github+json" },
+  });
+  if (res.status === 404) return { json: null, sha: null };
+  if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`);
+  const data = await res.json();
+  const text = decodeURIComponent(escape(atob(data.content)));
+  return { json: JSON.parse(text), sha: data.sha };
+}
+
+async function ghPut(path, json, sha, message) {
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 2) + "\n")));
+  const res = await fetch(`${API}/contents/${path}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${getToken()}`, Accept: "application/vnd.github+json" },
+    body: JSON.stringify({ message, content, sha: sha || undefined, branch: BRANCH }),
+  });
+  if (!res.ok) throw new Error(`PUT ${path} failed: ${res.status} ${await res.text()}`);
+  return res.json();
+}
+
+async function ghDispatch(questionId) {
+  const res = await fetch(`${API}/actions/workflows/${WORKFLOW}/dispatches`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${getToken()}`, Accept: "application/vnd.github+json" },
+    body: JSON.stringify({ ref: BRANCH, inputs: { question_id: questionId || "" } }),
+  });
+  if (!res.ok) throw new Error(`dispatch failed: ${res.status} ${await res.text()}`);
+}
+
+function uid() {
+  return "q_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function timeAgo(isoString) {
+  if (!isoString) return "never";
+  const diffMs = Date.now() - new Date(isoString).getTime();
+  const mins = Math.round(diffMs / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.round(hours / 24);
+  return `${days}d ago`;
+}
+
+function escapeHtml(s) {
+  return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+const ICONS = {
+  edit: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`,
+  play: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+  trash: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>`,
+  kebab: `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>`,
+};
+
+let currentQuestions = [];
+let questionsSha = null;
+let currentState = { meta: {}, questions: {} };
+let currentSettings = { notifyEmail: "", timezone: "UTC", scheduleDayOfWeek: 1, scheduleHour: 9 };
+let settingsSha = null;
+let editingId = null;
+
+function renderList() {
+  const list = $("#list");
+  if (!currentQuestions.length) {
+    list.innerHTML = `<div class="empty">No questions yet. Click "+ Add question" to start watching one.</div>`;
+    return;
+  }
+
+  list.innerHTML = currentQuestions.map((q) => {
+    const entry = currentState.questions[q.id] || {};
+    const status = entry.status || "PENDING";
+    const history = entry.history || [];
+    return `
+    <div class="card ${q.enabled ? "" : "disabled"}" data-id="${q.id}">
+      <div class="card-head">
+        <div style="min-width:0">
+          <div class="qtext">${escapeHtml(q.text)}</div>
+          <div class="meta-row">
+            <span class="badge ${status}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>
+            <span>Last checked: ${timeAgo(entry.lastCheckedAt)}</span>
+            <span>Last update found: ${timeAgo(entry.lastUpdateAt)}</span>
+          </div>
+          ${entry.currentAnswer ? `<div class="answer-box">${escapeHtml(entry.currentAnswer)}</div>` : ""}
+          ${status === "ERROR" && entry.lastError ? `<div class="error-text">${escapeHtml(entry.lastError)}</div>` : ""}
+          ${history.length ? `<button class="link-btn history-toggle">Show history</button>
+            <div class="history">${history.map((h) => `
+              <div class="history-item">
+                <span class="when">${new Date(h.checkedAt).toLocaleString()}</span> -
+                ${h.errorMessage ? escapeHtml(h.errorMessage) : (h.changed ? "Updated: " : "Unchanged: ") + escapeHtml(h.answer)}
+              </div>`).join("")}</div>` : ""}
+        </div>
+        <div class="actions-row">
+          <label class="switch">
+            <input type="checkbox" class="toggle" ${q.enabled ? "checked" : ""} />
+            <span class="slider"></span>
+          </label>
+          <div class="kebab-wrap">
+            <button class="kebab-btn" aria-label="More actions">${ICONS.kebab}</button>
+            <div class="kebab-menu">
+              <button class="check-now-btn">${ICONS.play} Check now</button>
+              <button class="edit-btn">${ICONS.edit} Edit</button>
+              <button class="delete-btn danger">${ICONS.trash} Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  list.querySelectorAll(".kebab-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const menu = btn.nextElementSibling;
+      const isOpen = menu.classList.contains("open");
+      list.querySelectorAll(".kebab-menu.open").forEach((m) => m.classList.remove("open"));
+      if (!isOpen) menu.classList.add("open");
+    });
+  });
+  document.addEventListener("click", () => {
+    list.querySelectorAll(".kebab-menu.open").forEach((m) => m.classList.remove("open"));
+  });
+
+  list.querySelectorAll(".history-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const historyEl = btn.nextElementSibling;
+      const open = historyEl.classList.toggle("open");
+      btn.textContent = open ? "Hide history" : "Show history";
+    });
+  });
+
+  list.querySelectorAll(".toggle").forEach((el) => {
+    el.addEventListener("change", async (e) => {
+      const id = e.target.closest(".card").dataset.id;
+      const q = currentQuestions.find((q) => q.id === id);
+      q.enabled = e.target.checked;
+      await persistQuestions(`${q.enabled ? "Enable" : "Disable"} question`);
+      toast(`Question ${q.enabled ? "enabled" : "disabled"}`);
+    });
+  });
+  list.querySelectorAll(".edit-btn").forEach((el) => {
+    el.addEventListener("click", (e) => openDialog(e.target.closest(".card").dataset.id));
+  });
+  list.querySelectorAll(".delete-btn").forEach((el) => {
+    el.addEventListener("click", async (e) => {
+      const id = e.target.closest(".card").dataset.id;
+      const q = currentQuestions.find((q) => q.id === id);
+      if (!confirm(`Delete "${q.text}"?`)) return;
+      currentQuestions = currentQuestions.filter((q) => q.id !== id);
+      await persistQuestions("Delete question");
+      renderList();
+      toast("Question deleted");
+    });
+  });
+  list.querySelectorAll(".check-now-btn").forEach((el) => {
+    el.addEventListener("click", async (e) => {
+      const id = e.target.closest(".card").dataset.id;
+      try {
+        await ghDispatch(id);
+        toast("Check triggered - takes 1-3 minutes. Refresh to see the result.");
+      } catch (err) {
+        toast("Failed to trigger: " + err.message);
+      }
+    });
+  });
+}
+
+async function persistQuestions(message) {
+  const result = await ghPut("questions.json", currentQuestions, questionsSha, message);
+  questionsSha = result.content.sha;
+}
+
+function openDialog(id) {
+  editingId = id;
+  const dialog = $("#question-dialog");
+  const form = $("#question-form");
+  form.reset();
+  if (id) {
+    $("#dialog-title").textContent = "Edit question";
+    form.text.value = currentQuestions.find((q) => q.id === id).text;
+  } else {
+    $("#dialog-title").textContent = "Add question";
+  }
+  dialog.showModal();
+}
+
+$("#add-btn").addEventListener("click", () => openDialog(null));
+$("#cancel-btn").addEventListener("click", () => $("#question-dialog").close());
+$("#question-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const text = e.target.text.value.trim();
+  if (!text) return;
+
+  const saveBtn = $("#save-btn");
+  saveBtn.disabled = true;
+  try {
+    if (editingId) {
+      currentQuestions.find((q) => q.id === editingId).text = text;
+      await persistQuestions("Edit question");
+    } else {
+      currentQuestions.push({ id: uid(), text, enabled: true, createdAt: new Date().toISOString() });
+      await persistQuestions("Add question");
+    }
+    $("#question-dialog").close();
+    renderList();
+    toast("Saved");
+  } catch (err) {
+    toast("Failed to save: " + err.message);
+  }
+  saveBtn.disabled = false;
+});
+
+$("#check-all-btn").addEventListener("click", async () => {
+  try {
+    await ghDispatch("");
+    toast("Check triggered for all enabled questions - takes a few minutes. Refresh to see results.");
+  } catch (err) {
+    toast("Failed to trigger: " + err.message);
+  }
+});
+
+// ---------- Settings ----------
+
+const COMMON_TIMEZONES = [
+  "UTC", "America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles",
+  "Europe/London", "Europe/Berlin", "Europe/Madrid", "Asia/Jerusalem", "Asia/Tokyo", "Australia/Sydney",
+];
+
+function populateSelects() {
+  const tzSelect = $("#timezone-select");
+  tzSelect.innerHTML = COMMON_TIMEZONES.map((tz) => `<option value="${tz}">${tz}</option>`).join("");
+
+  const hourSelect = $("#hour-select");
+  hourSelect.innerHTML = Array.from({ length: 24 }, (_, h) =>
+    `<option value="${h}">${String(h).padStart(2, "0")}:00</option>`).join("");
+}
+
+$("#settings-btn").addEventListener("click", async () => {
+  const form = $("#settings-form");
+  form.notifyEmail.value = currentSettings.notifyEmail || "";
+  if (![...$("#timezone-select").options].some((o) => o.value === currentSettings.timezone)) {
+    $("#timezone-select").insertAdjacentHTML("afterbegin", `<option value="${currentSettings.timezone}">${currentSettings.timezone}</option>`);
+  }
+  form.timezone.value = currentSettings.timezone;
+  form.scheduleDayOfWeek.value = String(currentSettings.scheduleDayOfWeek);
+  form.scheduleHour.value = String(currentSettings.scheduleHour);
+  $("#settings-dialog").showModal();
+});
+$("#settings-cancel-btn").addEventListener("click", () => $("#settings-dialog").close());
+$("#settings-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const updated = {
+    notifyEmail: form.notifyEmail.value.trim(),
+    timezone: form.timezone.value,
+    scheduleDayOfWeek: Number(form.scheduleDayOfWeek.value),
+    scheduleHour: Number(form.scheduleHour.value),
+  };
+  const saveBtn = $("#settings-save-btn");
+  saveBtn.disabled = true;
+  try {
+    const result = await ghPut("settings.json", updated, settingsSha, "Update settings");
+    settingsSha = result.content.sha;
+    currentSettings = updated;
+    $("#settings-dialog").close();
+    toast("Settings saved");
+  } catch (err) {
+    toast("Failed to save: " + err.message);
+  }
+  saveBtn.disabled = false;
+});
+
+// ---------- Token bar ----------
+
+$("#save-token").addEventListener("click", () => {
+  setToken($("#token-input").value.trim());
+  $("#token-input").value = "";
+  $("#token-bar").classList.remove("show");
+  loadAndRender();
+});
+$("#clear-token").addEventListener("click", () => {
+  localStorage.removeItem("qw_token");
+  toast("Token cleared");
+});
+
+// ---------- Load ----------
+
+async function loadAndRender() {
+  if (!getToken()) {
+    $("#token-bar").classList.add("show");
+    $("#list").innerHTML = `<div class="empty">Add a GitHub token above to load your questions.</div>`;
+    return;
+  }
+  try {
+    const [questionsRes, stateRes, settingsRes] = await Promise.all([
+      ghGet("questions.json"),
+      ghGet("state.json"),
+      ghGet("settings.json"),
+    ]);
+    currentQuestions = questionsRes.json || [];
+    questionsSha = questionsRes.sha;
+    currentState = stateRes.json || { meta: {}, questions: {} };
+    currentSettings = settingsRes.json || currentSettings;
+    settingsSha = settingsRes.sha;
+    renderList();
+  } catch (err) {
+    $("#list").innerHTML = `<div class="empty">Failed to load: ${err.message}</div>`;
+  }
+}
+
+populateSelects();
+loadAndRender();
+</script>
+</body>
+</html>

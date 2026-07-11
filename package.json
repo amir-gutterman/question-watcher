@@ -1,0 +1,14 @@
+{
+  "name": "question-watcher",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Monitors free-form questions and emails you when the web has meaningfully new information. Runs entirely on GitHub Pages + GitHub Actions - no server to host.",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.109.0",
+    "nodemailer": "^9.0.3"
+  }
+}

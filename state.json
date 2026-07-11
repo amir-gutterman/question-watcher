@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "lastWeeklyRunAt": null
+  },
+  "questions": {
+    "q_test1": {
+      "lastCheckedAt": "2026-07-11T19:14:34.565Z",
+      "lastUpdateAt": null,
+      "currentAnswer": "Based on current search results, there is no confirmed announcement of Revolut partnering with any airport lounge in Tel Aviv. Revolut offers airport lounge access through third-party aggregators (such as DragonPass/LoungeKey) at Ben Gurion Airport as part of its broader travel benefits, but no new, specific direct partnership with a Tel Aviv lounge has been announced.",
+      "currentSummary": "No confirmed new Revolut–Tel Aviv airport lounge partnership",
+      "status": "UNCHANGED",
+      "lastError": null,
+      "history": [
+        {
+          "checkedAt": "2026-07-11T19:14:34.565Z",
+          "answer": "Based on current search results, there is no confirmed announcement of Revolut partnering with any airport lounge in Tel Aviv. Revolut offers airport lounge access through third-party aggregators (such as DragonPass/LoungeKey) at Ben Gurion Airport as part of its broader travel benefits, but no new, specific direct partnership with a Tel Aviv lounge has been announced.",
+          "summary": "No confirmed new Revolut–Tel Aviv airport lounge partnership",
+          "sources": [
+            {
+              "title": "Revolut – Airport lounges",
+              "url": "https://www.revolut.com/lounges/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "This is the first time the question has been researched, so there is nothing meaningful to compare against yet.",
+          "errorMessage": null
+        }
+      ]
+    }
+  }
+}

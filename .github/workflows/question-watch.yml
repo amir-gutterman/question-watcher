@@ -1,0 +1,59 @@
+name: Question Watch
+
+on:
+  schedule:
+    # Every hour at :07 (off the top of the hour, like GitHub recommends for
+    # scheduled workflows). scripts/check.mjs itself decides whether this
+    # tick actually falls in the configured weekly slot (settings.json) -
+    # cheap no-op ticks the rest of the time.
+    - cron: "7 * * * *"
+  workflow_dispatch:
+    inputs:
+      question_id:
+        description: "Check just this question's id (leave blank to check every enabled question now)"
+        type: string
+        default: ""
+
+# Overlapping runs (e.g. a manual "Check now" landing near a scheduled tick)
+# both push to the same state.json - queue them instead of racing, since a
+# git conflict mid-push would otherwise fail the whole job.
+concurrency:
+  group: question-watch
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run checks
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_FROM_NAME: ${{ secrets.EMAIL_FROM_NAME }}
+        run: node scripts/check.mjs
+
+      - name: Persist state
+        run: |
+          git config user.name "question-watcher-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || git commit -m "Update question state"
+          for i in 1 2 3; do
+            git rebase --abort 2>/dev/null || true
+            git pull --rebase -q && git push && break
+            echo "push/rebase failed, retrying ($i)..."
+            sleep 5
+          done
