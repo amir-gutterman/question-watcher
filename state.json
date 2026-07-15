@@ -4,13 +4,22 @@
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-07-11T19:23:49.432Z",
+      "lastCheckedAt": "2026-07-15T19:27:36.514Z",
       "lastUpdateAt": null,
-      "currentAnswer": "No. My searches found no not I found no no confirmed announcement that Revolut has parted with any airport lounge in Tel Aviv (Ben Gurion Airport). Revolut continues to offer airport lounge access via third-party aggregators (such as DragonAss/Priority Pass/LoungeKey), which can include lounges at Ben Gurion, but no new, specific direct Revolut–Tel Aviv lounge partnership has been announced.",
-      "currentSummary": "No new direct Revolut–Tel Aviv lounge partnership announced",
+      "currentAnswer": ", searches for any recent Revolut–TAviv airport lounge partnership.",
+      "currentSummary": "Checking for a Revolut–Tel Aviv airport lounge partnership.",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-07-15T19:27:36.514Z",
+          "answer": ", searches for any recent Revolut–TAviv airport lounge partnership.",
+          "summary": "Checking for a Revolut–Tel Aviv airport lounge partnership.",
+          "sources": [],
+          "changed": false,
+          "changeReason": "Initial framing; awaiting search results before finaliz.",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-11T19:23:49.432Z",
           "answer": "No. My searches found no not I found no no confirmed announcement that Revolut has parted with any airport lounge in Tel Aviv (Ben Gurion Airport). Revolut continues to offer airport lounge access via third-party aggregators (such as DragonAss/Priority Pass/LoungeKey), which can include lounges at Ben Gurion, but no new, specific direct Revolut–Tel Aviv lounge partnership has been announced.",
