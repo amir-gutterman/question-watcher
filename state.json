@@ -4,13 +4,131 @@
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-07-15T19:34:57.980Z",
+      "lastCheckedAt": "2026-07-15T19:56:13.378Z",
       "lastUpdateAt": null,
-      "currentAnswer": "No, I found no evidence of a Revolut partnership with any airport lounge in Tel Aviv. Revolut offers lounge access globally through third-party networks such as LoungeKey and DragonPass rather than through a specific Tel Aviv (Ben Gurion) airport lounge partnership.",
-      "currentSummary": "No Revolut–Tel Aviv airport lounge partnership found",
+      "currentAnswer": "No Revolut partnership with a specific Tel Aviv (Ben Gurion) airport lounge has been announced, so the situation is unchanged.  Revolut offers unlimited free access to over 1,600 airport lounges worldwide, and lets any customer book at those lounges regardless of plan.  This access is provided through third-party lounge networks rather than a Revolut-specific Tel Aviv lounge, and  Revolut is switching its airport lounge access partner from DragonPass to LoungeKey.  The only recent Ben Gurion lounge development is unrelated to Revolut:  American Express Israel and aviation company Jetex have partnered to open a new premium lounge at Ben Gurion Airport, with access restricted to holders of Israeli cards.",
+      "currentSummary": "Still no Revolut partnership with a Tel Aviv airport lounge",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-07-15T19:56:13.378Z",
+          "answer": "No Revolut partnership with a specific Tel Aviv (Ben Gurion) airport lounge has been announced, so the situation is unchanged.  Revolut offers unlimited free access to over 1,600 airport lounges worldwide, and lets any customer book at those lounges regardless of plan.  This access is provided through third-party lounge networks rather than a Revolut-specific Tel Aviv lounge, and  Revolut is switching its airport lounge access partner from DragonPass to LoungeKey.  The only recent Ben Gurion lounge development is unrelated to Revolut:  American Express Israel and aviation company Jetex have partnered to open a new premium lounge at Ben Gurion Airport, with access restricted to holders of Israeli cards.",
+          "summary": "Still no Revolut partnership with a Tel Aviv airport lounge",
+          "sources": [
+            {
+              "title": "Salons d'aéroports | Revolut France",
+              "url": "https://www.revolut.com/fr-FR/lounges/"
+            },
+            {
+              "title": "Lounges",
+              "url": "https://www.iaa.gov.il/en/airports/ben-gurion/lounges/"
+            },
+            {
+              "title": "Revolut salon aéroport : accéder aux lounges en 2026",
+              "url": "https://parrainduweb.fr/blog/revolut-salon-aeroport"
+            },
+            {
+              "title": "Lounge Services",
+              "url": "https://www.iaa.gov.il/en/companies/lounges/"
+            },
+            {
+              "title": "Tel Aviv Airport Lounges (TLV)",
+              "url": "https://www.telaviv-airport.com/lounges.php"
+            },
+            {
+              "title": "Tel Aviv - Ben Gurion Int'l Airport Lounges | Executive Airport Lounge",
+              "url": "https://www.bookfhr.com/airport-lounges/tel-aviv-ben-gurion-intl-airport-lounges/"
+            },
+            {
+              "title": "Ben Gurion Airport Lounges - Complete Guide | TLV Flights",
+              "url": "https://www.tlvflights.com/en/magazine/airport-lounges/"
+            },
+            {
+              "title": "Dan Hotel Lounges - Dan Hotels Israel",
+              "url": "https://www.danhotels.com/AboutDanhotels/DanHotelsLounges"
+            },
+            {
+              "title": "Ben Gurion Airport Guide | Aero VIP",
+              "url": "https://www.vipbengurion.com/en/ben-gurion-airport-guide/"
+            },
+            {
+              "title": "Lounges | Revolut United Kingdom",
+              "url": "https://www.revolut.com/lounges/"
+            },
+            {
+              "title": "Revolut \"ditches\" DragonPass and switches to Lounge Key: rooms increase, but some goodies are lost - The Flight Club",
+              "url": "https://www.theflightclub.it/en/2026/05/revolut-dumps-dragonpass-and-switches-to-lounge-key-italian-travelers-lose-mxp-premium/"
+            },
+            {
+              "title": "Airport Lounges | Revolut Germany",
+              "url": "https://help.revolut.com/en-DE/help/revpoints/airport-lounges/"
+            },
+            {
+              "title": "Do you get free airport lounge with Revolut?",
+              "url": "https://www.citizendailypost.com/faq/do-you-get-free-airport-lounge-with-revolut"
+            },
+            {
+              "title": "Lounges | Revolut Netherlands",
+              "url": "https://www.revolut.com/en-NL/lounges/"
+            },
+            {
+              "title": "How do I purchase an airport lounge pass? | Revolut United States",
+              "url": "https://help.revolut.com/en-US/help/app-features/accessing-airport-lounges/purchasing-a-lounge-pass/"
+            },
+            {
+              "title": "Airport lounges - Revolut Belgium",
+              "url": "https://www.revolut.com/en-BE/lounges/"
+            },
+            {
+              "title": "How do I use my airport lounge pass? | Revolut France",
+              "url": "https://help.revolut.com/en-FR/help/revpoints/airport-lounges/question-rules-for-using-the-lounge-pass/"
+            },
+            {
+              "title": "Lounges | Revolut Greece",
+              "url": "https://www.revolut.com/en-GR/lounges/"
+            },
+            {
+              "title": "Airport Lounge Pass | Revolut United States",
+              "url": "https://www.revolut.com/en-US/legal/dragonpass-lounges/"
+            },
+            {
+              "title": "Airport Lounge Pass | Revolut Australia",
+              "url": "https://www.revolut.com/en-AU/legal/dragonpass-lounges/"
+            },
+            {
+              "title": "DragonPass Lounge Pass",
+              "url": "https://cdn.revolut.com/terms_and_conditions/pdf/airport_lounge_pass_2e17f5cc_1.0.1_1692284975_en.pdf"
+            },
+            {
+              "title": "How do I use my airport lounge pass? | Revolut United States",
+              "url": "https://help.revolut.com/en-US/help/app-features/accessing-airport-lounges/rules-for-using-the-lounge-pass/"
+            },
+            {
+              "title": "Priority Pass vs. DragonPass: differences of the two \"all you can visit\" - The Flight Club",
+              "url": "https://www.theflightclub.it/en/2025/08/priority-pass-vs-dragon-pass-differences-of-the-two-all-you-can-visit/"
+            },
+            {
+              "title": "New Jetex Lounge at Ben Gurion: Good News for Israeli Amex Cardholders, Not So Much for Americans • YeahThatsKosher",
+              "url": "https://yeahthatskosher.com/2026/05/new-jetex-lounge-at-ben-gurion-good-news-for-israeli-amex-cardholders-not-so-much-for-americans/"
+            },
+            {
+              "title": "Does Ben Gurion Airport Have a Lounge for Travelers?",
+              "url": "https://platinum-aviation.com/blog/does-ben-gurion-airport-have-a-lounge/"
+            },
+            {
+              "title": "Israel Airports Authority issues VIP Lounges tender at Ben Gurion Airport : Moodie Davitt Report",
+              "url": "https://moodiedavittreport.com/israel-airports-authority-issues-vip-lounges-tender-at-ben-gurion-international-airport/"
+            },
+            {
+              "title": "Tel Aviv Ben Gurion Airport (TLV)",
+              "url": "https://www.aspirelounges.com/airports/tel-aviv-ben-gurion-airport/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "The core answer remains that no Revolut Tel Aviv lounge partnership exists; the added details about lounge networks and an unrelated Amex/Jetex lounge do not change the underlying fact.",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-15T19:34:57.980Z",
           "answer": "No, I found no evidence of a Revolut partnership with any airport lounge in Tel Aviv. Revolut offers lounge access globally through third-party networks such as LoungeKey and DragonPass rather than through a specific Tel Aviv (Ben Gurion) airport lounge partnership.",
