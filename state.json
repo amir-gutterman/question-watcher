@@ -4,13 +4,27 @@
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-07-16T15:11:29.989Z",
-      "lastUpdateAt": null,
-      "currentAnswer": "The situation remains unchanged from the last known answer. I have sufficient confirmation.\n\nNo Revolut partnership with a specific Tel Aviv (Ben Gurion) airport lounge has been announced, so the situation is unchanged.  Revolut has switched its airport lounge access partner from DragonPass to LoungeKey , and customers can still book access through that third-party lounge network rather than through any Revolut-specific Tel Aviv lounge. The only recent Ben Gurion lounge development is unrelated to Revolut:  a new Jetex lounge has opened at Ben Gurion, offering good news for Israeli Amex cardholders but not for Americans .",
-      "currentSummary": "Still no Revolut partnership with a Tel Aviv airport lounge",
-      "status": "ERROR",
-      "lastError": "Research failed: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"'claude-haiku-4-5-20251001' does not support programmatic tool calling. The following tools have `allowed_callers` that require it: web_search. Explicitly set `allowed_callers=[\\\"direct\\\"]` on these tools, or use a model that supports programmatic tool calling.\"},\"request_id\":\"req_011Cd5x74zdAphbWUMco3TuR\"}",
+      "lastCheckedAt": "2026-07-16T15:22:58.819Z",
+      "lastUpdateAt": "2026-07-16T15:22:58.819Z",
+      "currentAnswer": "No",
+      "currentSummary": "No",
+      "status": "UPDATED",
+      "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-07-16T15:22:58.819Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut salon aéroport : accéder aux lounges en 2026",
+              "url": "https://parrainduweb.fr/blog/revolut-salon-aeroport"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"The situation remains unchanged from the last known answer. I have sufficient confirmation.\n\nNo Revolut partnership with a specific Tel Aviv (Ben Gurion) airport lounge has been announced, so the situation is unchanged.  Revolut has switched its airport lounge access partner from DragonPass to LoungeKey , and customers can still book access through that third-party lounge network rather than through any Revolut-specific Tel Aviv lounge. The only recent Ben Gurion lounge development is unrelated to Revolut:  a new Jetex lounge has opened at Ben Gurion, offering good news for Israeli Amex cardholders but not for Americans .\" to \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-16T15:11:29.989Z",
           "answer": "",
