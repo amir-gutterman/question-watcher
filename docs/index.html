@@ -140,14 +140,19 @@
       Paste a GitHub <strong>fine-grained personal access token</strong> scoped to this repo
       (permissions: <strong>Contents: read/write</strong>, <strong>Actions: read/write</strong>).
       It's stored only in this browser's local storage and sent directly to the GitHub API -
-      never to any other server.
+      never to any other server. Saving it below also offers to save it in your browser's
+      password manager, so a synced browser (e.g. Chrome signed into the same account) can
+      often fill it in automatically on your other devices too.
       <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one &rarr;</a>
     </p>
-    <input type="password" id="token-input" placeholder="github_pat_..." />
-    <div style="display:flex; gap:8px;">
-      <button class="primary small" id="save-token">Save token</button>
-      <button class="ghost small" id="clear-token">Clear</button>
-    </div>
+    <form id="token-form" autocomplete="on">
+      <input type="text" name="username" value="question-watcher" autocomplete="username" hidden />
+      <input type="password" id="token-input" name="password" placeholder="github_pat_..." autocomplete="current-password" />
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <button type="submit" class="primary small" id="save-token">Save token</button>
+        <button type="button" class="ghost small" id="clear-token">Clear</button>
+      </div>
+    </form>
   </div>
 
   <div id="list"></div>
@@ -229,6 +234,32 @@ const toast = (msg) => {
 
 function getToken() { return localStorage.getItem("qw_token") || ""; }
 function setToken(t) { localStorage.setItem("qw_token", t); }
+
+// Explicitly asks the browser to offer saving the token in its password
+// manager (Chrome/Edge support this; other browsers just no-op here but
+// still get a save-password prompt from the <form> submit itself).
+async function offerToSaveCredential(token) {
+  if (!("credentials" in navigator) || !window.PasswordCredential) return;
+  try {
+    const cred = new PasswordCredential({ id: "question-watcher", name: "Question Watcher", password: token });
+    await navigator.credentials.store(cred);
+  } catch {
+    // Not fatal - the token is already saved to localStorage regardless.
+  }
+}
+
+// On a device that never had the token in localStorage, silently checks
+// the browser's own saved-credential store (synced browsers may already
+// have it from another device) before falling back to asking the user.
+async function tryAutoFillFromCredentialStore() {
+  if (!("credentials" in navigator)) return null;
+  try {
+    const cred = await navigator.credentials.get({ password: true, mediation: "optional" });
+    return cred?.password || null;
+  } catch {
+    return null;
+  }
+}
 
 async function ghGet(path) {
   const res = await fetch(`${API}/contents/${path}?ref=${BRANCH}`, {
@@ -507,8 +538,12 @@ $("#settings-form").addEventListener("submit", async (e) => {
 
 // ---------- Token bar ----------
 
-$("#save-token").addEventListener("click", () => {
-  setToken($("#token-input").value.trim());
+$("#token-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const token = $("#token-input").value.trim();
+  if (!token) return;
+  setToken(token);
+  await offerToSaveCredential(token); // triggers the browser's "save password?" prompt
   $("#token-input").value = "";
   $("#token-bar").classList.remove("show");
   loadAndRender();
@@ -522,9 +557,16 @@ $("#clear-token").addEventListener("click", () => {
 
 async function loadAndRender() {
   if (!getToken()) {
-    $("#token-bar").classList.add("show");
-    $("#list").innerHTML = `<div class="empty">Add a GitHub token above to load your questions.</div>`;
-    return;
+    // Before asking the user, check whether the browser already has this
+    // saved (e.g. synced from another device) and can supply it silently.
+    const savedToken = await tryAutoFillFromCredentialStore();
+    if (savedToken) {
+      setToken(savedToken);
+    } else {
+      $("#token-bar").classList.add("show");
+      $("#list").innerHTML = `<div class="empty">Add a GitHub token above to load your questions.</div>`;
+      return;
+    }
   }
   try {
     const [questionsRes, stateRes, settingsRes] = await Promise.all([

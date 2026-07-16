@@ -107,6 +107,11 @@ which only Actions uses.
 4. Generate, copy the token, and paste it into the token bar at the top of
    the dashboard the first time you load it. It's stored only in your
    browser's `localStorage` - never sent anywhere except the GitHub API.
+5. Saving it also triggers your browser's native "save password?" prompt
+   (via the Credential Management API where supported, e.g. Chrome/Edge).
+   Accepting it means a synced browser signed into the same account on
+   another device (e.g. your phone) can often retrieve it automatically
+   instead of asking you to paste the token again.
 
 ### 5. Add your first question
 
