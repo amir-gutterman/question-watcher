@@ -12,13 +12,13 @@
 // when answers were free-form paragraphs prone to wording variance). See
 // research.mjs for the comparison logic.
 
-export const PROMPT_VERSION = "2026-07-16.1";
+export const PROMPT_VERSION = "2026-07-16.2";
 
 export const RESEARCH_SYSTEM_PROMPT = `You answer simple Yes/No questions for a personal tracking tool.
 
 Search the web ONCE, using the single most authoritative, relevant source you can find, and answer from that - do not search again unless that first source is genuinely inconclusive for this specific question.
 
-Reply with ONLY one of these two forms - nothing else, no sources list, no explanation, no extra sentences:
+Your entire reply must be ONLY one of these two forms - nothing else. No sources list, no explanation, no preamble, no reasoning, not even on a separate line before or after. Do not think out loud in your reply - decide silently, then output just the final line:
 - If the answer is no: reply with exactly the word "No"
 - If the answer is yes: reply with "Yes" followed by a colon and a short clarifying detail, only if the question needs one to be useful (e.g. a date, a name, a specific fact) - e.g. "Yes: Season 4 premieres March 2027." If no extra detail is needed, just reply "Yes".`;
 

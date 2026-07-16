@@ -27,6 +27,22 @@ function getClient() {
   return client;
 }
 
+/**
+ * The prompt asks for a bare "No" / "Yes: <detail>" reply, but smaller
+ * models (Haiku) sometimes prepend reasoning even so, all as one text block
+ * with no intervening tool call to split on. If the canonical answer
+ * appears on its own line, use that line instead of the whole blob; if the
+ * model didn't follow the format at all, fall back to the full text rather
+ * than lose the answer.
+ */
+function extractCanonicalLine(text) {
+  const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (/^(no|yes\b.*)$/i.test(lines[i])) return lines[i];
+  }
+  return text.trim();
+}
+
 /** Concatenates the trailing text blocks (the final answer, after any
  * search) and collects { title, url } from web_search_tool_result blocks. */
 function extractAnswerAndSources(response) {
@@ -51,7 +67,10 @@ function extractAnswerAndSources(response) {
     }
   }
 
-  const answer = finalTextBlocks.map((block) => block.text).join(" ").trim();
+  // Joined with newlines (not spaces) so extractCanonicalLine can still find
+  // a trailing "No"/"Yes: ..." line if the model prepended reasoning.
+  const rawText = finalTextBlocks.map((block) => block.text).join("\n").trim();
+  const answer = extractCanonicalLine(rawText);
   // One web_search call still returns a full results page (multiple links) -
   // "just check one source" means recording only the top result, not every
   // link the search happened to surface.
@@ -75,7 +94,10 @@ export async function research({ questionText, previousAnswer }) {
     max_tokens: 300,
     system: RESEARCH_SYSTEM_PROMPT,
     messages: [{ role: "user", content: buildResearchUserPrompt({ questionText }) }],
-    tools: [{ type: "web_search_20260209", name: "web_search", max_uses: 1 }],
+    // allowed_callers: ["direct"] is required on Haiku - without it the API
+    // defaults web_search to programmatic (code-execution-mediated) calling,
+    // which Haiku doesn't support and rejects with a 400.
+    tools: [{ type: "web_search_20260209", name: "web_search", max_uses: 1, allowed_callers: ["direct"] }],
     // Forces the model to actually call web_search instead of answering
     // from memory.
     tool_choice: { type: "any" },
