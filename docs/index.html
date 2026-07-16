@@ -3,137 +3,260 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
 <title>Question Watcher</title>
 <style>
   :root {
     --bg: #f8fafc;
     --panel: #ffffff;
     --panel-2: #f1f5f9;
+    --panel-3: #e2e8f0;
     --border: #e2e8f0;
     --text: #0f172a;
     --muted: #64748b;
+    --muted-2: #94a3b8;
     --accent: #3466f6;
-    --accent-2: #059669;
+    --accent-ink: #ffffff;
+    --yes: #059669;
+    --yes-bg: #d1fae5;
+    --no: #64748b;
+    --no-bg: #f1f5f9;
     --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --pending: #94a3b8;
+    --pending-bg: #f1f5f9;
+    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 8px 24px rgba(15,23,42,.06);
+    --shadow-lg: 0 12px 32px rgba(15,23,42,.16);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1220;
+      --panel: #131b2c;
+      --panel-2: #1b2436;
+      --panel-3: #26314a;
+      --border: #263148;
+      --text: #e8ecf5;
+      --muted: #93a0bd;
+      --muted-2: #6b7897;
+      --accent: #5b8cff;
+      --accent-ink: #071129;
+      --yes: #34d399;
+      --yes-bg: rgba(52,211,153,.14);
+      --no: #93a0bd;
+      --no-bg: rgba(148,163,184,.12);
+      --danger: #f87171;
+      --danger-bg: rgba(248,113,113,.14);
+      --pending: #6b7897;
+      --pending-bg: rgba(107,120,151,.14);
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.3);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,.5);
+    }
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding: 32px 20px 80px;
+    padding: 28px 16px 100px;
+    font-size: 15px;
+    line-height: 1.5;
   }
-  .wrap { max-width: 760px; margin: 0 auto; }
-  header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-  h1 { font-size: 22px; margin: 0; }
-  .subtitle { color: var(--muted); font-size: 13px; margin-top: 4px; max-width: 480px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  a { color: var(--accent); }
+
+  header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .title-block { min-width: 0; }
+  h1 { font-size: 21px; margin: 0; letter-spacing: -.01em; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-top: 5px; max-width: 460px; line-height: 1.5; }
+  .stats-line { color: var(--muted-2); font-size: 12.5px; margin: 10px 0 20px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .stats-line .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted-2); flex-shrink: 0; }
+  .stats-line strong { color: var(--text); font-weight: 600; }
+
   button {
     font-family: inherit;
     cursor: pointer;
     border: none;
-    border-radius: 8px;
-    padding: 9px 16px;
-    font-size: 13px;
+    border-radius: 9px;
+    padding: 10px 16px;
+    font-size: 13.5px;
     font-weight: 600;
-    transition: opacity .15s, transform .1s;
+    transition: opacity .15s, transform .1s, background .15s;
+    -webkit-tap-highlight-color: transparent;
   }
-  button:hover { opacity: .9; }
-  button:active { transform: scale(.97); }
-  button.primary { background: var(--accent); color: white; }
-  button.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
-  button.danger-text { background: transparent; color: var(--danger); padding: 4px 6px; font-weight: 500; }
-  button.small { padding: 6px 10px; font-size: 12px; }
+  button:hover { opacity: .92; }
+  button:active { transform: scale(.96); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.primary { background: var(--accent); color: var(--accent-ink); }
+  button.ghost { background: var(--panel); color: var(--text); border: 1px solid var(--border); }
+  button.icon-btn-labeled { background: var(--panel); color: var(--text); border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 6px; }
+  button.small { padding: 8px 12px; font-size: 12.5px; }
   button:disabled { opacity: .5; cursor: not-allowed; }
-  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
 
   #token-bar {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 14px;
+    padding: 18px;
     margin-bottom: 20px;
     display: none;
+    box-shadow: var(--shadow);
   }
   #token-bar.show { display: block; }
-  #token-bar p { margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-  #token-bar input { width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-size: 13px; margin-bottom: 10px; }
+  #token-bar p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  #token-bar input {
+    width: 100%; padding: 11px 12px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--text); font-size: 14px; min-height: 44px;
+  }
+  #token-bar input:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
 
   .card {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 13px;
+    position: relative;
+    overflow: hidden;
   }
-  .card.disabled { opacity: .55; }
-  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .qtext { font-size: 14px; font-weight: 600; line-height: 1.4; }
-  .meta-row { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; color: var(--muted); font-size: 12px; }
-  .badge { display: inline-block; padding: 2px 9px; border-radius: 100px; font-size: 11px; font-weight: 600; }
-  .badge.PENDING, .badge.UNCHANGED { background: #e2e8f0; color: #475569; }
-  .badge.UPDATED { background: rgba(5,150,105,.14); color: var(--accent-2); }
-  .badge.ERROR { background: rgba(220,38,38,.12); color: var(--danger); }
-  .answer-box { margin-top: 10px; background: var(--panel-2); border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.5; }
-  .error-text { margin-top: 8px; color: var(--danger); font-size: 12px; }
+  .card.disabled { opacity: .5; }
+  .card.is-updated::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--yes);
+  }
 
-  .actions-row { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-  .switch { position: relative; width: 36px; height: 21px; flex-shrink: 0; }
+  .status-icon {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .status-icon.yes { background: var(--yes-bg); color: var(--yes); }
+  .status-icon.no { background: var(--no-bg); color: var(--no); }
+  .status-icon.error { background: var(--danger-bg); color: var(--danger); }
+  .status-icon.pending { background: var(--pending-bg); color: var(--pending); border: 1.5px dashed var(--muted-2); }
+
+  .card-body { flex: 1; min-width: 0; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .qtext { font-size: 14.5px; font-weight: 600; line-height: 1.4; }
+  .answer-line { font-size: 14px; font-weight: 600; margin-top: 4px; }
+  .answer-line.yes { color: var(--yes); }
+  .answer-line.no { color: var(--no); }
+  .answer-line.pending { color: var(--pending); font-weight: 500; }
+  .error-text { margin-top: 4px; color: var(--danger); font-size: 12.5px; line-height: 1.5; }
+  .updated-tag {
+    display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em; color: var(--yes); background: var(--yes-bg);
+    padding: 2px 7px; border-radius: 100px; margin-left: 8px; vertical-align: middle;
+  }
+
+  .meta-row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px;
+    margin-top: 8px; color: var(--muted-2); font-size: 12px;
+  }
+  .meta-row a { color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .meta-row a:hover { color: var(--accent); }
+  .meta-row a svg { flex-shrink: 0; }
+
+  .actions-row { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .switch { position: relative; width: 40px; height: 24px; flex-shrink: 0; }
   .switch input { opacity: 0; width: 0; height: 0; }
-  .slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 100px; cursor: pointer; transition: .15s; }
-  .slider:before { content: ""; position: absolute; width: 15px; height: 15px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: .15s; }
-  .switch input:checked + .slider { background: var(--accent-2); }
-  .switch input:checked + .slider:before { transform: translateX(15px); }
+  .slider { position: absolute; inset: 0; background: var(--panel-3); border-radius: 100px; cursor: pointer; transition: .15s; }
+  .slider:before { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: var(--panel); box-shadow: 0 1px 3px rgba(0,0,0,.3); border-radius: 50%; transition: .15s; }
+  .switch input:checked + .slider { background: var(--yes); }
+  .switch input:checked + .slider:before { transform: translateX(16px); }
+  .switch input:focus-visible + .slider { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .kebab-wrap { position: relative; }
-  .kebab-btn { background: transparent; border: none; color: var(--muted); width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  .kebab-btn {
+    background: transparent; border: none; color: var(--muted); width: 36px; height: 36px;
+    border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; padding: 0;
+  }
   .kebab-btn:hover { background: var(--panel-2); }
-  .kebab-menu { position: absolute; right: 0; top: 32px; z-index: 10; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; min-width: 150px; padding: 6px; display: none; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .kebab-menu {
+    position: absolute; right: 0; top: 40px; z-index: 10; background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; min-width: 160px; padding: 6px; display: none; box-shadow: var(--shadow-lg);
+  }
   .kebab-menu.open { display: block; }
-  .kebab-menu button { display: flex; align-items: center; gap: 8px; width: 100%; background: transparent; color: var(--text); font-weight: 500; padding: 8px 10px; border-radius: 6px; text-align: left; font-size: 13px; }
+  .kebab-menu button {
+    display: flex; align-items: center; gap: 9px; width: 100%; background: transparent; color: var(--text);
+    font-weight: 500; padding: 10px 11px; border-radius: 8px; text-align: left; font-size: 13.5px;
+  }
   .kebab-menu button:hover { background: var(--panel-2); }
   .kebab-menu button.danger { color: var(--danger); }
 
   .history { margin-top: 10px; border-left: 2px solid var(--border); padding-left: 12px; display: none; }
   .history.open { display: block; }
-  .history-item { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-  .history-item .when { font-weight: 600; color: var(--text); }
-  .link-btn { background: none; border: none; color: var(--accent); font-size: 12px; font-weight: 600; padding: 0; margin-top: 8px; cursor: pointer; }
+  .history-item { font-size: 12px; color: var(--muted); margin-bottom: 9px; line-height: 1.5; }
+  .history-item .when { font-weight: 600; color: var(--text); display: block; margin-bottom: 1px; }
+  .history-item .answer-chip { font-weight: 600; }
+  .history-item .answer-chip.yes { color: var(--yes); }
+  .history-item .answer-chip.no { color: var(--no); }
+  .link-btn { background: none; border: none; color: var(--accent); font-size: 12.5px; font-weight: 600; padding: 6px 0; margin-top: 4px; cursor: pointer; }
 
-  .empty { text-align: center; padding: 50px 20px; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px; }
+  .empty { text-align: center; padding: 56px 20px; color: var(--muted); border: 1px dashed var(--border); border-radius: 14px; font-size: 14px; }
+  .loading { text-align: center; padding: 40px 20px; color: var(--muted-2); font-size: 13.5px; }
 
-  dialog { border: none; border-radius: 16px; background: var(--panel); color: var(--text); padding: 24px; width: min(460px, 92vw); }
-  dialog::backdrop { background: rgba(15,23,42,.45); }
+  dialog {
+    border: none; border-radius: 18px; background: var(--panel); color: var(--text);
+    padding: 22px; width: min(460px, calc(100vw - 32px)); box-shadow: var(--shadow-lg);
+  }
+  dialog::backdrop { background: rgba(8,12,22,.5); backdrop-filter: blur(2px); }
   dialog h2 { margin-top: 0; font-size: 17px; }
   .field { margin-top: 14px; }
-  .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; font-weight: 600; }
-  .field textarea, .field input, .field select { width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text); font-size: 13px; font-family: inherit; }
-  .field textarea { min-height: 80px; resize: vertical; }
-  .field .hint { margin-top: 5px; font-size: 11px; color: var(--muted); }
+  .field label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+  .field textarea, .field input, .field select {
+    width: 100%; padding: 11px 12px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--text); font-size: 15px; font-family: inherit; min-height: 44px;
+  }
+  .field textarea { min-height: 84px; resize: vertical; }
+  .field textarea:focus-visible, .field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .field .hint { margin-top: 6px; font-size: 11.5px; color: var(--muted-2); line-height: 1.5; }
   .field-row { display: flex; gap: 10px; }
   .field-row .field { flex: 1; }
-  .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+  .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; }
 
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--text); color: white; padding: 10px 18px; border-radius: 10px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: 90vw; text-align: center; }
-  .toast.show { opacity: 1; }
-  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -1px; margin-right: 6px; }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(0); background: var(--text);
+    color: var(--bg); padding: 12px 18px; border-radius: 12px; font-size: 13.5px; opacity: 0;
+    transition: opacity .2s, transform .2s; pointer-events: none; max-width: min(360px, 90vw); text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+  .spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.4); border-top-color: currentColor; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: -1px; margin-right: 6px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 480px) {
+    body { padding: 20px 12px 100px; }
+    header { flex-direction: column; }
+    .header-actions { width: 100%; }
+    .header-actions button { flex: 1; }
+    .card { padding: 14px; gap: 11px; }
+    .status-icon { width: 36px; height: 36px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div>
+    <div class="title-block">
       <h1>Question Watcher</h1>
       <div class="subtitle">Monitors your questions and emails you only when the web has something meaningfully new to say. Runs on GitHub Actions - no server, no hosting cost.</div>
     </div>
     <div class="header-actions">
-      <button class="ghost small" id="settings-btn">Settings</button>
+      <button class="icon-btn-labeled small" id="settings-btn" aria-label="Settings">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
       <button class="ghost small" id="check-all-btn">Check all now</button>
       <button class="primary" id="add-btn">+ Add question</button>
     </div>
   </header>
+
+  <div class="stats-line" id="stats-line"></div>
 
   <div id="token-bar">
     <p>
@@ -155,7 +278,7 @@
     </form>
   </div>
 
-  <div id="list"></div>
+  <div id="list"><div class="loading">Loading...</div></div>
 </div>
 
 <dialog id="question-dialog">
@@ -164,7 +287,7 @@
     <div class="field">
       <label>Question</label>
       <textarea name="text" required placeholder='e.g. "Has White Lotus Season 4 received an official release date?"'></textarea>
-      <div class="hint">Free-form, natural language. Be specific - it's researched literally.</div>
+      <div class="hint">Free-form, natural language. Be specific - it's researched literally, and answered strictly Yes or No.</div>
     </div>
     <div class="dialog-actions">
       <button type="button" class="ghost" id="cancel-btn">Cancel</button>
@@ -229,7 +352,8 @@ const toast = (msg) => {
   const t = $("#toast");
   t.textContent = msg;
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 3200);
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove("show"), 3200);
 };
 
 function getToken() { return localStorage.getItem("qw_token") || ""; }
@@ -297,7 +421,7 @@ function uid() {
 }
 
 function timeAgo(isoString) {
-  if (!isoString) return "never";
+  if (!isoString) return null;
   const diffMs = Date.now() - new Date(isoString).getTime();
   const mins = Math.round(diffMs / 60000);
   if (mins < 1) return "just now";
@@ -312,11 +436,31 @@ function escapeHtml(s) {
   return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
+function hostname(url) {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return url; }
+}
+
+/** Splits a "Yes: detail" answer into { isYes, detail }. Treats anything
+ * not literally "No" (case-insensitive) as a yes-shaped answer, so odd
+ * model output still renders sensibly instead of looking like an error. */
+function parseAnswer(answer) {
+  const trimmed = (answer || "").trim();
+  if (/^no$/i.test(trimmed)) return { isYes: false, detail: "" };
+  const m = trimmed.match(/^yes:?\s*(.*)$/i);
+  if (m) return { isYes: true, detail: m[1] };
+  return { isYes: true, detail: trimmed };
+}
+
 const ICONS = {
   edit: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`,
   play: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
   trash: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>`,
   kebab: `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  minus: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+  alert: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>`,
+  clock: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+  link: `<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
 };
 
 let currentQuestions = [];
@@ -326,50 +470,108 @@ let currentSettings = { notifyEmail: "", timezone: "UTC", scheduleDayOfWeek: 1, 
 let settingsSha = null;
 let editingId = null;
 
+// Surfaces what needs attention first: broken checks, then things that just
+// changed, then never-checked questions, then the steady-state "no news" -
+// with the most recently checked first within each group.
+const STATUS_PRIORITY = { ERROR: 0, UPDATED: 1, PENDING: 2, UNCHANGED: 3 };
+function sortedQuestions() {
+  return [...currentQuestions].sort((a, b) => {
+    const sa = currentState.questions[a.id]?.status || "PENDING";
+    const sb = currentState.questions[b.id]?.status || "PENDING";
+    const pd = STATUS_PRIORITY[sa] - STATUS_PRIORITY[sb];
+    if (pd !== 0) return pd;
+    const ta = currentState.questions[a.id]?.lastCheckedAt || "";
+    const tb = currentState.questions[b.id]?.lastCheckedAt || "";
+    return tb.localeCompare(ta);
+  });
+}
+
+function renderStats() {
+  const el = $("#stats-line");
+  if (!currentQuestions.length) { el.innerHTML = ""; return; }
+  const counts = { UPDATED: 0, ERROR: 0 };
+  for (const q of currentQuestions) {
+    const s = currentState.questions[q.id]?.status;
+    if (s === "UPDATED") counts.UPDATED++;
+    if (s === "ERROR") counts.ERROR++;
+  }
+  const parts = [`<strong>${currentQuestions.length}</strong> question${currentQuestions.length === 1 ? "" : "s"} watched`];
+  if (counts.UPDATED) parts.push(`<span style="color:var(--yes)"><strong>${counts.UPDATED}</strong> updated</span>`);
+  if (counts.ERROR) parts.push(`<span style="color:var(--danger)"><strong>${counts.ERROR}</strong> failing</span>`);
+  el.innerHTML = parts.join(`<span class="dot"></span>`);
+}
+
+function statusIconFor(status, isYes) {
+  if (status === "ERROR") return { cls: "error", icon: ICONS.alert };
+  if (status === "PENDING") return { cls: "pending", icon: ICONS.clock };
+  return isYes ? { cls: "yes", icon: ICONS.check } : { cls: "no", icon: ICONS.minus };
+}
+
 function renderList() {
+  renderStats();
   const list = $("#list");
   if (!currentQuestions.length) {
     list.innerHTML = `<div class="empty">No questions yet. Click "+ Add question" to start watching one.</div>`;
     return;
   }
 
-  list.innerHTML = currentQuestions.map((q) => {
+  list.innerHTML = sortedQuestions().map((q) => {
     const entry = currentState.questions[q.id] || {};
     const status = entry.status || "PENDING";
     const history = entry.history || [];
+    const { isYes, detail } = parseAnswer(entry.currentAnswer);
+    const icon = statusIconFor(status, isYes);
+    const checkedAgo = timeAgo(entry.lastCheckedAt);
+    const source = entry.status !== "PENDING" ? history[0]?.sources?.[0] : null;
+
+    const answerLine =
+      status === "ERROR"
+        ? `<div class="error-text">${escapeHtml(entry.lastError || "Check failed.")}</div>`
+        : status === "PENDING"
+          ? `<div class="answer-line pending">Not checked yet</div>`
+          : `<div class="answer-line ${isYes ? "yes" : "no"}">${isYes ? "Yes" : "No"}${detail ? ` &mdash; ${escapeHtml(detail)}` : ""}${status === "UPDATED" ? `<span class="updated-tag">Updated</span>` : ""}</div>`;
+
+    const metaBits = [];
+    if (source) metaBits.push(`<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${ICONS.link}${escapeHtml(hostname(source.url))}</a>`);
+    if (checkedAgo) metaBits.push(`<span>Checked ${checkedAgo}</span>`);
+    else metaBits.push(`<span>Never checked</span>`);
+
     return `
-    <div class="card ${q.enabled ? "" : "disabled"}" data-id="${q.id}">
-      <div class="card-head">
-        <div style="min-width:0">
-          <div class="qtext">${escapeHtml(q.text)}</div>
-          <div class="meta-row">
-            <span class="badge ${status}">${status.charAt(0) + status.slice(1).toLowerCase()}</span>
-            <span>Last checked: ${timeAgo(entry.lastCheckedAt)}</span>
-            <span>Last update found: ${timeAgo(entry.lastUpdateAt)}</span>
+    <div class="card ${q.enabled ? "" : "disabled"} ${status === "UPDATED" ? "is-updated" : ""}" data-id="${q.id}">
+      <div class="status-icon ${icon.cls}" aria-hidden="true">${icon.icon}</div>
+      <div class="card-body">
+        <div class="card-top">
+          <div style="min-width:0">
+            <div class="qtext">${escapeHtml(q.text)}</div>
+            ${answerLine}
           </div>
-          ${entry.currentAnswer ? `<div class="answer-box">${escapeHtml(entry.currentAnswer)}</div>` : ""}
-          ${status === "ERROR" && entry.lastError ? `<div class="error-text">${escapeHtml(entry.lastError)}</div>` : ""}
-          ${history.length ? `<button class="link-btn history-toggle">Show history</button>
-            <div class="history">${history.map((h) => `
-              <div class="history-item">
-                <span class="when">${new Date(h.checkedAt).toLocaleString()}</span> -
-                ${h.errorMessage ? escapeHtml(h.errorMessage) : (h.changed ? "Updated: " : "Unchanged: ") + escapeHtml(h.answer)}
-              </div>`).join("")}</div>` : ""}
-        </div>
-        <div class="actions-row">
-          <label class="switch">
-            <input type="checkbox" class="toggle" ${q.enabled ? "checked" : ""} />
-            <span class="slider"></span>
-          </label>
-          <div class="kebab-wrap">
-            <button class="kebab-btn" aria-label="More actions">${ICONS.kebab}</button>
-            <div class="kebab-menu">
-              <button class="check-now-btn">${ICONS.play} Check now</button>
-              <button class="edit-btn">${ICONS.edit} Edit</button>
-              <button class="delete-btn danger">${ICONS.trash} Delete</button>
+          <div class="actions-row">
+            <label class="switch" title="${q.enabled ? "Disable" : "Enable"}">
+              <input type="checkbox" class="toggle" ${q.enabled ? "checked" : ""} aria-label="Enabled" />
+              <span class="slider"></span>
+            </label>
+            <div class="kebab-wrap">
+              <button class="kebab-btn" aria-label="More actions">${ICONS.kebab}</button>
+              <div class="kebab-menu">
+                <button class="check-now-btn">${ICONS.play} Check now</button>
+                <button class="edit-btn">${ICONS.edit} Edit</button>
+                <button class="delete-btn danger">${ICONS.trash} Delete</button>
+              </div>
             </div>
           </div>
         </div>
+        <div class="meta-row">${metaBits.join("")}</div>
+        ${history.length ? `<button class="link-btn history-toggle">Show history (${history.length})</button>
+          <div class="history">${history.map((h) => {
+            const ha = parseAnswer(h.answer);
+            return `
+              <div class="history-item">
+                <span class="when">${new Date(h.checkedAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}</span>
+                ${h.errorMessage
+                  ? escapeHtml(h.errorMessage)
+                  : `<span class="answer-chip ${ha.isYes ? "yes" : "no"}">${ha.isYes ? "Yes" : "No"}${ha.detail ? " - " + escapeHtml(ha.detail) : ""}</span>`}
+              </div>`;
+          }).join("")}</div>` : ""}
       </div>
     </div>`;
   }).join("");
@@ -391,7 +593,7 @@ function renderList() {
     btn.addEventListener("click", () => {
       const historyEl = btn.nextElementSibling;
       const open = historyEl.classList.toggle("open");
-      btn.textContent = open ? "Hide history" : "Show history";
+      btn.textContent = open ? "Hide history" : btn.textContent.replace("Hide", "Show");
     });
   });
 
@@ -423,7 +625,7 @@ function renderList() {
       const id = e.target.closest(".card").dataset.id;
       try {
         await ghDispatch(id);
-        toast("Check triggered - takes 1-3 minutes. Refresh to see the result.");
+        toast("Check triggered - takes 1-2 minutes. Refresh to see the result.");
       } catch (err) {
         toast("Failed to trigger: " + err.message);
       }
@@ -448,6 +650,7 @@ function openDialog(id) {
     $("#dialog-title").textContent = "Add question";
   }
   dialog.showModal();
+  form.text.focus();
 }
 
 $("#add-btn").addEventListener("click", () => openDialog(null));
@@ -476,13 +679,19 @@ $("#question-form").addEventListener("submit", async (e) => {
   saveBtn.disabled = false;
 });
 
-$("#check-all-btn").addEventListener("click", async () => {
+$("#check-all-btn").addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> Triggering...`;
   try {
     await ghDispatch("");
     toast("Check triggered for all enabled questions - takes a few minutes. Refresh to see results.");
   } catch (err) {
     toast("Failed to trigger: " + err.message);
   }
+  btn.disabled = false;
+  btn.textContent = original;
 });
 
 // ---------- Settings ----------
