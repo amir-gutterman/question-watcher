@@ -4,13 +4,27 @@
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-07-16T15:22:58.819Z",
+      "lastCheckedAt": "2026-07-16T15:31:47.487Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
-      "status": "UPDATED",
+      "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-07-16T15:31:47.487Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Lounges | Revolut United Kingdom",
+              "url": "https://www.revolut.com/lounges/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-16T15:22:58.819Z",
           "answer": "No",
@@ -335,13 +349,27 @@
       ]
     },
     "q_mrnblfkexba27m": {
-      "lastCheckedAt": "2026-07-16T15:11:30.353Z",
-      "lastUpdateAt": null,
-      "currentAnswer": "No official release date has been set for The White Lotus Season 4.  There is no premiere date for The White Lotus Season 4 yet, but production for the latest chapter kicked off in France on April 15, 2026.   There's still no premiere date, but a 2027 debut is widely considered the safest bet, though HBO's early renewal and active production timeline could help shorten the turnaround.   The season is set on the French Riviera, filming across Cannes, St. Tropez, and Monaco, and will follow a new group of guests and employees over the span of a week set during the Cannes Film Festival.",
-      "currentSummary": "No official release date yet; 2027 debut expected",
-      "status": "ERROR",
-      "lastError": "Research failed: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"'claude-haiku-4-5-20251001' does not support programmatic tool calling. The following tools have `allowed_callers` that require it: web_search. Explicitly set `allowed_callers=[\\\"direct\\\"]` on these tools, or use a model that supports programmatic tool calling.\"},\"request_id\":\"req_011Cd5x75qiqyDjXPwVdhruF\"}",
+      "lastCheckedAt": "2026-07-16T15:31:49.727Z",
+      "lastUpdateAt": "2026-07-16T15:31:49.727Z",
+      "currentAnswer": "No",
+      "currentSummary": "No",
+      "status": "UPDATED",
+      "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-07-16T15:31:49.727Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "‘The White Lotus’ Season 4: Everything We Know So Far",
+              "url": "https://robbreport.com/lifestyle/news/the-white-lotus-season-1236442297/"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"No official release date has been set for The White Lotus Season 4.  There is no premiere date for The White Lotus Season 4 yet, but production for the latest chapter kicked off in France on April 15, 2026.   There's still no premiere date, but a 2027 debut is widely considered the safest bet, though HBO's early renewal and active production timeline could help shorten the turnaround.   The season is set on the French Riviera, filming across Cannes, St. Tropez, and Monaco, and will follow a new group of guests and employees over the span of a week set during the Cannes Film Festival.\" to \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-16T15:11:30.353Z",
           "answer": "",
@@ -392,13 +420,27 @@
       ]
     },
     "q_mrnbmh9ne6oerm": {
-      "lastCheckedAt": "2026-07-16T15:11:30.497Z",
-      "lastUpdateAt": null,
-      "currentAnswer": "Christopher Nolan's The Odyssey opens in theaters on July 17, 2026, with early showings available on July 16 starting at 2 p.m. ET.   The film premiered on July 6, 2026, at the Empire Leicester Square in London, ahead of a theatrical release by Universal Pictures on July 17 in the United States and the United Kingdom.   It brings Homer's foundational saga to IMAX film screens for the first time and stars Matt Damon, Tom Holland, Anne Hathaway, Robert Pattinson and Lupita Nyong'o, among others.",
-      "currentSummary": "The Odyssey releases July 17, 2026 via Universal Pictures",
-      "status": "ERROR",
-      "lastError": "Research failed: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"'claude-haiku-4-5-20251001' does not support programmatic tool calling. The following tools have `allowed_callers` that require it: web_search. Explicitly set `allowed_callers=[\\\"direct\\\"]` on these tools, or use a model that supports programmatic tool calling.\"},\"request_id\":\"req_011Cd5x76asYvYvC9spM2wcS\"}",
+      "lastCheckedAt": "2026-07-16T15:32:00.283Z",
+      "lastUpdateAt": "2026-07-16T15:32:00.283Z",
+      "currentAnswer": "Yes: July 17, 2026",
+      "currentSummary": "Yes: July 17, 2026",
+      "status": "UPDATED",
+      "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-07-16T15:32:00.283Z",
+          "answer": "Yes: July 17, 2026",
+          "summary": "Yes: July 17, 2026",
+          "sources": [
+            {
+              "title": "The Odyssey (2026) | Action, Adventure, Fantasy",
+              "url": "https://www.imdb.com/title/tt33764258/"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"Christopher Nolan's The Odyssey opens in theaters on July 17, 2026, with early showings available on July 16 starting at 2 p.m. ET.   The film premiered on July 6, 2026, at the Empire Leicester Square in London, ahead of a theatrical release by Universal Pictures on July 17 in the United States and the United Kingdom.   It brings Homer's foundational saga to IMAX film screens for the first time and stars Matt Damon, Tom Holland, Anne Hathaway, Robert Pattinson and Lupita Nyong'o, among others.\" to \"Yes: July 17, 2026\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-16T15:11:30.497Z",
           "answer": "",
