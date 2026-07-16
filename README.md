@@ -49,10 +49,9 @@ a schedule (or on demand).
   with the results.
 - **`scripts/check.mjs`** - the actual work: reads `questions.json` /
   `state.json` / `settings.json`, researches whatever is due via
-  [`scripts/lib/research.mjs`](scripts/lib/research.mjs) (a single Claude API
-  call per question, using Claude's built-in web search tool), decides
-  whether the result is a *semantically* meaningful change vs. the previous
-  answer, updates `state.json`, and emails a batch of whatever changed via
+  [`scripts/lib/research.mjs`](scripts/lib/research.mjs) (one cheap Claude
+  Haiku call per question, one web search, a strict "No" / "Yes: &lt;detail&gt;"
+  answer), updates `state.json`, and emails a batch of whatever changed via
   [`scripts/lib/notify.mjs`](scripts/lib/notify.mjs) (Gmail SMTP).
 - **The repo is the database.** `questions.json` (your questions),
   `state.json` (current answer + status + history per question, written by
@@ -157,23 +156,49 @@ reduce this, but expect your weekly check within the hour rather than to
 the exact minute. Use **"Check now"** / **"Check all now"** on the
 dashboard any time you don't want to wait.
 
-## Detecting change semantically, not by string diff
+## Detecting change: a constrained answer format, not semantic comparison
 
-This is the part of the spec worth calling out: the AI is explicitly
-instructed (see [`scripts/lib/prompts.mjs`](scripts/lib/prompts.mjs)) to
-judge meaning, not wording - "No release date has been announced" and
-"There is still no release date" must **not** trigger an email; "Revolut
-announced a partnership with Dan Lounge" replacing "No partnership exists"
-**must**. Unconfirmed rumours are treated as not-an-answer and ignored
-unless the question is specifically about rumours/speculation. A question's
-very first check never emails (there's nothing to compare against yet) - it
-just establishes the baseline answer.
+Every question here is a strict Yes/No question, and the model is instructed
+(see [`scripts/lib/prompts.mjs`](scripts/lib/prompts.mjs)) to reply with only
+one of two forms: exactly `"No"`, or `"Yes: <short detail>"` (e.g. `"Yes:
+Season 4 premieres March 2027."`). Because the format is fixed, a plain
+normalized text comparison (see `research.mjs`) is enough to catch a real
+change - the wording-variance problem that would normally require a
+semantic-comparison LLM call ("no release date" vs. "still no release
+date") doesn't come up when the model isn't allowed to phrase things
+differently between checks. This also means no second API call is needed
+just to decide changed/unchanged - one cheap call does the whole thing.
+A question's very first check never emails (there's nothing to compare
+against yet) - it just establishes the baseline answer.
 
-If you want to tune this behavior, edit the system prompt in
-`scripts/lib/prompts.mjs` - bump `PROMPT_VERSION` when you do, since it's
-logged with every run (visible in the Action's run logs) and lets you
-correlate behavior changes with prompt changes later. Nothing else needs to
-change for a prompt edit to take effect.
+If your questions need free-form answers instead of Yes/No (e.g. "What is
+the release date?"), you'd want to bring back a semantic-comparison step -
+see git history before this change for the two-call design that did that
+via a follow-up structured-JSON call.
+
+If you want to tune the answer format or research behavior, edit the system
+prompt in `scripts/lib/prompts.mjs` - bump `PROMPT_VERSION` when you do,
+since it's logged with every run (visible in the Action's run logs) and lets
+you correlate behavior changes with prompt changes later. Nothing else needs
+to change for a prompt edit to take effect.
+
+## Keeping this cheap
+
+Two choices keep the per-check cost low:
+
+- **Model**: defaults to `claude-haiku-4-5` (via `ANTHROPIC_MODEL`), the
+  cheapest current Claude model - plenty for a Yes/No lookup, no need for a
+  larger model's deeper reasoning.
+- **Search depth**: `max_uses: 1` on the web search tool caps the model to a
+  single search call per question (`tool_choice: "any"` forces it to
+  actually search rather than answer from memory, but it can't search
+  again after that). One search can still return multiple links in its
+  results page - only the top one is kept in `sources`.
+
+Together these took a single check from tens of cents (a thorough, 20-30
+source research paragraph on Opus) down to a small fraction of a cent. If
+you switch to a larger model or loosen `max_uses`, expect the cost to scale
+accordingly - see `scripts/lib/research.mjs`.
 
 ## Data model
 
@@ -265,8 +290,8 @@ scripts/
   check.mjs                 Actions job entrypoint: reads the JSON files,
                              runs due checks, writes state.json, emails.
   lib/
-    research.mjs             Claude call + web search + pause_turn/refusal handling
-    prompts.mjs               System prompt + structured output schema
+    research.mjs             One cheap Haiku call + single web search + text-diff change detection
+    prompts.mjs               System prompt for the strict Yes/No answer format
     notify.mjs                 Notification fan-out (Gmail SMTP today)
     emailTemplates.mjs         Email subject/HTML/text builders
 .github/workflows/
