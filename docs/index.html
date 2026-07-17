@@ -198,7 +198,23 @@
   .link-btn { background: none; border: none; color: var(--accent); font-size: 12.5px; font-weight: 600; padding: 6px 0; margin-top: 4px; cursor: pointer; }
 
   .empty { text-align: center; padding: 56px 20px; color: var(--muted); border: 1px dashed var(--border); border-radius: 14px; font-size: 14px; }
+  .empty.compact { padding: 22px 20px; margin-bottom: 12px; }
   .loading { text-align: center; padding: 40px 20px; color: var(--muted-2); font-size: 13.5px; }
+
+  .archived-section { margin-top: 8px; }
+  .archived-toggle {
+    display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: none;
+    border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; font-weight: 600;
+    padding: 14px 2px; cursor: pointer;
+  }
+  .archived-toggle:hover { color: var(--text); }
+  .archived-toggle .chevron { display: inline-flex; transition: transform .15s; flex-shrink: 0; }
+  .archived-toggle .chevron.open { transform: rotate(90deg); }
+  .count-badge { background: var(--panel-3); color: var(--muted); font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 100px; }
+  .archived-list { display: none; margin-top: 4px; }
+  .archived-list.open { display: block; }
+  .archived-list .card { opacity: .75; }
+  .archived-list .card:hover { opacity: 1; }
 
   dialog {
     border: none; border-radius: 18px; background: var(--panel); color: var(--text);
@@ -461,6 +477,7 @@ const ICONS = {
   alert: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>`,
   clock: `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
   link: `<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+  chevron: `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`,
 };
 
 let currentQuestions = [];
@@ -469,6 +486,7 @@ let currentState = { meta: {}, questions: {} };
 let currentSettings = { notifyEmail: "", timezone: "UTC", scheduleDayOfWeek: 1, scheduleHour: 9 };
 let settingsSha = null;
 let editingId = null;
+let archivedExpanded = false;
 
 // Surfaces what needs attention first: broken checks, then things that just
 // changed, then never-checked questions, then the steady-state "no news" -
@@ -486,18 +504,39 @@ function sortedQuestions() {
   });
 }
 
+/** A question is "done" once it's been checked and answered Yes - it moves
+ * to the collapsed Archived section regardless of its enabled flag, so a
+ * manually re-enabled (still being watched) answered question stays visible
+ * there rather than cluttering the active list. Not-yet-checked/errored
+ * questions never count as archived, even though parseAnswer(null) would
+ * otherwise read as yes-shaped. */
+function groupQuestions() {
+  const active = [];
+  const archived = [];
+  for (const q of sortedQuestions()) {
+    const entry = currentState.questions[q.id] || {};
+    const status = entry.status || "PENDING";
+    const isChecked = status === "UPDATED" || status === "UNCHANGED";
+    const isArchived = isChecked && parseAnswer(entry.currentAnswer).isYes;
+    (isArchived ? archived : active).push(q);
+  }
+  return { active, archived };
+}
+
 function renderStats() {
   const el = $("#stats-line");
   if (!currentQuestions.length) { el.innerHTML = ""; return; }
+  const { active, archived } = groupQuestions();
   const counts = { UPDATED: 0, ERROR: 0 };
-  for (const q of currentQuestions) {
+  for (const q of active) {
     const s = currentState.questions[q.id]?.status;
     if (s === "UPDATED") counts.UPDATED++;
     if (s === "ERROR") counts.ERROR++;
   }
-  const parts = [`<strong>${currentQuestions.length}</strong> question${currentQuestions.length === 1 ? "" : "s"} watched`];
+  const parts = [`<strong>${active.length}</strong> active question${active.length === 1 ? "" : "s"}`];
   if (counts.UPDATED) parts.push(`<span style="color:var(--yes)"><strong>${counts.UPDATED}</strong> updated</span>`);
   if (counts.ERROR) parts.push(`<span style="color:var(--danger)"><strong>${counts.ERROR}</strong> failing</span>`);
+  if (archived.length) parts.push(`<span><strong>${archived.length}</strong> archived</span>`);
   el.innerHTML = parts.join(`<span class="dot"></span>`);
 }
 
@@ -507,15 +546,7 @@ function statusIconFor(status, isYes) {
   return isYes ? { cls: "yes", icon: ICONS.check } : { cls: "no", icon: ICONS.minus };
 }
 
-function renderList() {
-  renderStats();
-  const list = $("#list");
-  if (!currentQuestions.length) {
-    list.innerHTML = `<div class="empty">No questions yet. Click "+ Add question" to start watching one.</div>`;
-    return;
-  }
-
-  list.innerHTML = sortedQuestions().map((q) => {
+function renderCard(q) {
     const entry = currentState.questions[q.id] || {};
     const status = entry.status || "PENDING";
     const history = entry.history || [];
@@ -574,7 +605,43 @@ function renderList() {
           }).join("")}</div>` : ""}
       </div>
     </div>`;
-  }).join("");
+}
+
+function renderList() {
+  renderStats();
+  const list = $("#list");
+  if (!currentQuestions.length) {
+    list.innerHTML = `<div class="empty">No questions yet. Click "+ Add question" to start watching one.</div>`;
+    return;
+  }
+
+  const { active, archived } = groupQuestions();
+
+  const activeHtml = active.length
+    ? active.map(renderCard).join("")
+    : `<div class="empty compact">No active questions${archived.length ? " &mdash; everything's answered. See Archived below." : ""}.</div>`;
+
+  const archivedHtml = archived.length
+    ? `<div class="archived-section">
+        <button class="archived-toggle" id="archived-toggle" aria-expanded="${archivedExpanded}">
+          <span class="chevron ${archivedExpanded ? "open" : ""}">${ICONS.chevron}</span>
+          Archived <span class="count-badge">${archived.length}</span>
+        </button>
+        <div class="archived-list ${archivedExpanded ? "open" : ""}" id="archived-list">
+          ${archived.map(renderCard).join("")}
+        </div>
+      </div>`
+    : "";
+
+  list.innerHTML = activeHtml + archivedHtml;
+
+  const archivedToggle = $("#archived-toggle");
+  if (archivedToggle) {
+    archivedToggle.addEventListener("click", () => {
+      archivedExpanded = !archivedExpanded;
+      renderList();
+    });
+  }
 
   list.querySelectorAll(".kebab-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {

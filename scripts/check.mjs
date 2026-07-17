@@ -73,11 +73,24 @@ function pushHistory(entry, list) {
   return next.slice(0, HISTORY_LIMIT);
 }
 
+/** Anything other than a bare "No" counts as answered - matches the
+ * dashboard's own parseAnswer() so archiving and display agree. */
+function isYesAnswer(answer) {
+  return !/^no$/i.test((answer || "").trim());
+}
+
 /**
  * Researches one question, updates `state.questions[id]` in place, and
  * returns a QuestionUpdate if the check found a meaningful change (email-
  * worthy) - or null otherwise. Never throws: failures are recorded on the
  * question's state instead, so one bad question can't take down the batch.
+ *
+ * Also auto-pauses the question (question.enabled = false, mutated in
+ * place so the caller can persist questions.json) the moment its answer
+ * *becomes* "Yes" - once answered, there's nothing left to watch for by
+ * default. Only fires on the transition (not-yet-Yes -> Yes), so manually
+ * re-enabling an already-answered question to keep watching it sticks -
+ * this won't re-pause it on every subsequent check that's still Yes.
  */
 async function checkOne(question, state) {
   const prior = state.questions[question.id] ?? {
@@ -128,6 +141,13 @@ async function checkOne(question, state) {
     };
 
     console.log(JSON.stringify({ event: "check.done", questionId: question.id, changed }));
+
+    const wasYesBefore = prior.currentAnswer !== null && isYesAnswer(prior.currentAnswer);
+    const isYesNow = isYesAnswer(result.answer);
+    if (isYesNow && !wasYesBefore && question.enabled) {
+      question.enabled = false;
+      console.log(JSON.stringify({ event: "check.auto_paused", questionId: question.id }));
+    }
 
     if (!changed) return null;
 
@@ -216,6 +236,7 @@ async function main() {
 
   console.log(JSON.stringify({ event: "check.batch_start", count: toCheck.length, isManualRun }));
 
+  const enabledBefore = new Map(questions.map((q) => [q.id, q.enabled]));
   const updates = [];
   for (const question of toCheck) {
     const update = await checkOne(question, state);
@@ -223,6 +244,14 @@ async function main() {
   }
 
   await writeFile(STATE_PATH, JSON.stringify(state, null, 2) + "\n");
+
+  // checkOne() auto-pauses a question in place (question.enabled = false)
+  // the moment its answer becomes "Yes" - persist that if it happened.
+  const questionsChanged = questions.some((q) => enabledBefore.get(q.id) !== q.enabled);
+  if (questionsChanged) {
+    await writeFile(QUESTIONS_PATH, JSON.stringify(questions, null, 2) + "\n");
+    console.log(JSON.stringify({ event: "check.questions_updated" }));
+  }
 
   await notifyUpdates(updates, settings);
 
