@@ -50,8 +50,17 @@ async function getDispatchInputs() {
 }
 
 /**
- * True if `now` falls in the hour matching settings.scheduleDayOfWeek /
+ * True if `now` falls on settings.scheduleDayOfWeek, at or after
  * scheduleHour, interpreted in settings.timezone.
+ *
+ * Deliberately NOT an exact-hour match: GitHub Actions' cron silently drops
+ * scheduled ticks under load instead of queuing them (observed as low as
+ * 9 of 24 hourly ticks landing on a given day), so requiring the one tick
+ * at exactly scheduleHour risked losing the whole week if that single tick
+ * got dropped. Matching any tick from scheduleHour through the rest of the
+ * scheduled day means only a full day of dropped ticks (never observed)
+ * would miss it. The lastWeeklyRunAt dedupe guard in main() still ensures
+ * this only actually fires once per week.
  */
 function isDueBySchedule(settings, now) {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -65,7 +74,7 @@ function isDueBySchedule(settings, now) {
   const hour = Number(parts.find((p) => p.type === "hour").value);
   const weekdayIndex = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(weekdayStr);
 
-  return weekdayIndex === settings.scheduleDayOfWeek && hour === settings.scheduleHour;
+  return weekdayIndex === settings.scheduleDayOfWeek && hour >= settings.scheduleHour;
 }
 
 function pushHistory(entry, list) {
