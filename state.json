@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": null
+    "lastWeeklyRunAt": "2026-08-10T10:33:39.385Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-07-16T15:31:47.487Z",
+      "lastCheckedAt": "2026-08-10T10:33:39.419Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-10T10:33:39.419Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut \"ditches\" DragonPass and switches to Lounge Key: rooms increase, but some goodies are lost - The Flight Club",
+              "url": "https://www.theflightclub.it/en/2026/05/revolut-dumps-dragonpass-and-switches-to-lounge-key-italian-travelers-lose-mxp-premium/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-16T15:31:47.487Z",
           "answer": "No",
@@ -349,13 +363,27 @@
       ]
     },
     "q_mrnblfkexba27m": {
-      "lastCheckedAt": "2026-07-16T15:31:49.727Z",
+      "lastCheckedAt": "2026-08-10T10:33:41.951Z",
       "lastUpdateAt": "2026-07-16T15:31:49.727Z",
       "currentAnswer": "No",
       "currentSummary": "No",
-      "status": "UPDATED",
+      "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-10T10:33:41.951Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "'The White Lotus' season 4 — release date speculation, casting announcements, confirmed location, plot synopsis and more",
+              "url": "https://www.yahoo.com/entertainment/tv/articles/white-lotus-season-4-release-154242586.html"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-16T15:31:49.727Z",
           "answer": "No",
@@ -539,13 +567,27 @@
       ]
     },
     "q_ms6bavsga2l9jo": {
-      "lastCheckedAt": "2026-07-29T16:41:54.512Z",
+      "lastCheckedAt": "2026-08-10T10:33:44.689Z",
       "lastUpdateAt": null,
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-10T10:33:44.689Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Black Mirror Season 8 Release Date Estimate, News & Updates",
+              "url": "https://www.comingsoon.net/guides/news/2091511-black-mirror-season-8-release-date-estimate-news-updates"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-07-29T16:41:54.512Z",
           "answer": "No",
