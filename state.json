@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-08-10T10:33:39.385Z"
+    "lastWeeklyRunAt": "2026-08-17T09:53:28.764Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-08-10T10:33:39.419Z",
+      "lastCheckedAt": "2026-08-17T09:53:28.976Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-17T09:53:28.976Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut Makes Fintech Physical with European Airport Lounges | FinTech Magazine",
+              "url": "https://fintechmagazine.com/news/revolut-makes-fintech-physical-with-european-airport-lounges"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-10T10:33:39.419Z",
           "answer": "No",
@@ -363,13 +377,27 @@
       ]
     },
     "q_mrnblfkexba27m": {
-      "lastCheckedAt": "2026-08-10T10:33:41.951Z",
+      "lastCheckedAt": "2026-08-17T09:53:32.089Z",
       "lastUpdateAt": "2026-07-16T15:31:49.727Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-17T09:53:32.089Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "'The White Lotus' season 4 — release date speculation, casting announcements, confirmed location, plot synopsis and more",
+              "url": "https://www.yahoo.com/entertainment/tv/articles/white-lotus-season-4-release-154242586.html"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-10T10:33:41.951Z",
           "answer": "No",
@@ -567,13 +595,27 @@
       ]
     },
     "q_ms6bavsga2l9jo": {
-      "lastCheckedAt": "2026-08-10T10:33:44.689Z",
+      "lastCheckedAt": "2026-08-17T09:53:34.807Z",
       "lastUpdateAt": null,
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-17T09:53:34.807Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Black Mirror season 8 premiere date: A March 2026 update",
+              "url": "https://cartermatt.com/717220/black-mirror-season-8-premiere-date-a-march-2026-update/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-10T10:33:44.689Z",
           "answer": "No",
