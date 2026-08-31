@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-08-24T09:58:51.235Z"
+    "lastWeeklyRunAt": "2026-08-31T13:36:33.340Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-08-24T09:58:51.477Z",
+      "lastCheckedAt": "2026-08-31T13:36:33.371Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-31T13:36:33.371Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut plans premium lounges at European airports",
+              "url": "https://www.rte.ie/news/business/2026/0813/1587684-revolut-plans-premium-lounges-at-european-airports/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-24T09:58:51.477Z",
           "answer": "No",
@@ -391,13 +405,27 @@
       ]
     },
     "q_mrnblfkexba27m": {
-      "lastCheckedAt": "2026-08-24T09:58:53.937Z",
+      "lastCheckedAt": "2026-08-31T13:36:35.795Z",
       "lastUpdateAt": "2026-07-16T15:31:49.727Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-31T13:36:35.795Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "'The White Lotus' season 4: release date, cast, location and latest updates",
+              "url": "https://www.newsweek.com/entertainment/tv/the-white-lotus-season-4-release-11589122"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-24T09:58:53.937Z",
           "answer": "No",
@@ -623,13 +651,27 @@
       ]
     },
     "q_ms6bavsga2l9jo": {
-      "lastCheckedAt": "2026-08-24T09:58:56.048Z",
-      "lastUpdateAt": null,
-      "currentAnswer": "No",
-      "currentSummary": "No",
-      "status": "UNCHANGED",
+      "lastCheckedAt": "2026-08-31T13:36:38.758Z",
+      "lastUpdateAt": "2026-08-31T13:36:38.758Z",
+      "currentAnswer": "No: Netflix has not announced a premiere date for Black Mirror Season 8",
+      "currentSummary": "No: Netflix has not announced a premiere date for Black Mirror Season 8",
+      "status": "UPDATED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-08-31T13:36:38.758Z",
+          "answer": "No: Netflix has not announced a premiere date for Black Mirror Season 8",
+          "summary": "No: Netflix has not announced a premiere date for Black Mirror Season 8",
+          "sources": [
+            {
+              "title": "Black Mirror Renewed for Season 8 at Netflix",
+              "url": "https://variety.com/2026/tv/global/black-mirror-renewed-season-8-netflix-1236627181/"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"No\" to \"No: Netflix has not announced a premiere date for Black Mirror Season 8\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-24T09:58:56.048Z",
           "answer": "No",
