@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-08-31T13:36:33.340Z"
+    "lastWeeklyRunAt": "2026-09-07T10:11:21.709Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-08-31T13:36:33.371Z",
+      "lastCheckedAt": "2026-09-07T10:11:21.771Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-07T10:11:21.771Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut to expand airport lounge network across Europe - FStech",
+              "url": "https://www.fstech.co.uk/fst/Revolut_To_Expand_Airport_Lounge_Network_Across_Europe.php"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-31T13:36:33.371Z",
           "answer": "No",
@@ -405,13 +419,27 @@
       ]
     },
     "q_mrnblfkexba27m": {
-      "lastCheckedAt": "2026-08-31T13:36:35.795Z",
+      "lastCheckedAt": "2026-09-07T10:11:24.640Z",
       "lastUpdateAt": "2026-07-16T15:31:49.727Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-07T10:11:24.640Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "'The White Lotus' season 4: release date, cast, location and latest updates",
+              "url": "https://www.newsweek.com/entertainment/tv/the-white-lotus-season-4-release-11589122"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-08-31T13:36:35.795Z",
           "answer": "No",
