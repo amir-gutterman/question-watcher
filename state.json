@@ -787,13 +787,27 @@
       ]
     },
     "q_mu2088hhirn6x4": {
-      "lastCheckedAt": "2026-09-15T01:40:12.978Z",
+      "lastCheckedAt": "2026-09-16T10:49:28.408Z",
       "lastUpdateAt": null,
       "currentAnswer": "Yes:",
       "currentSummary": "Yes:",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-16T10:49:28.408Z",
+          "answer": "Yes:",
+          "summary": "Yes:",
+          "sources": [
+            {
+              "title": "Woody Allen’s Spain-Set Film Back on Track as Director Sets October Production Start",
+              "url": "https://ground.news/article/woody-allen-will-shoot-her-new-film-in-madrid-starting-october-5th"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"Yes:\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-15T01:40:12.978Z",
           "answer": "Yes:",
