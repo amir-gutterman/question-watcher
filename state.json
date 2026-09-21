@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-09-14T13:57:01.644Z"
+    "lastWeeklyRunAt": "2026-09-21T14:00:03.738Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-09-14T13:57:01.721Z",
+      "lastCheckedAt": "2026-09-21T14:00:03.775Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-21T14:00:03.775Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut to expand airport lounge network across Europe - FStech",
+              "url": "https://www.fstech.co.uk/fst/Revolut_To_Expand_Airport_Lounge_Network_Across_Europe.php"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-14T13:57:01.721Z",
           "answer": "No",
@@ -433,13 +447,27 @@
       ]
     },
     "q_mrnblfkexba27m": {
-      "lastCheckedAt": "2026-09-14T13:57:04.077Z",
-      "lastUpdateAt": "2026-07-16T15:31:49.727Z",
-      "currentAnswer": "No",
-      "currentSummary": "No",
-      "status": "UNCHANGED",
+      "lastCheckedAt": "2026-09-21T14:00:07.507Z",
+      "lastUpdateAt": "2026-09-21T14:00:07.507Z",
+      "currentAnswer": "Yes:",
+      "currentSummary": "Yes:",
+      "status": "UPDATED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-21T14:00:07.507Z",
+          "answer": "Yes:",
+          "summary": "Yes:",
+          "sources": [
+            {
+              "title": "The White Lotus Season 4 Release Date Update Means HBO Show Returns Sooner Than Fans Think",
+              "url": "https://www.yahoo.com/entertainment/tv/articles/white-lotus-season-4-release-230620258.html"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"No\" to \"Yes:\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-14T13:57:04.077Z",
           "answer": "No",
@@ -787,13 +815,27 @@
       ]
     },
     "q_mu2088hhirn6x4": {
-      "lastCheckedAt": "2026-09-16T10:49:28.408Z",
-      "lastUpdateAt": null,
-      "currentAnswer": "Yes:",
-      "currentSummary": "Yes:",
-      "status": "UNCHANGED",
+      "lastCheckedAt": "2026-09-21T14:00:12.631Z",
+      "lastUpdateAt": "2026-09-21T14:00:12.631Z",
+      "currentAnswer": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
+      "currentSummary": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
+      "status": "UPDATED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-21T14:00:12.631Z",
+          "answer": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
+          "summary": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
+          "sources": [
+            {
+              "title": "Untitled Woody Allen Madrid Film | Production List",
+              "url": "https://www.productionlist.com/production/untitled-woody-allen-madrid-film"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"Yes:\" to \"Yes: filming will take place mainly in the city centre and also in Aranjuez\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-16T10:49:28.408Z",
           "answer": "Yes:",
