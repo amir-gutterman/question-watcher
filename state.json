@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-09-21T14:00:03.738Z"
+    "lastWeeklyRunAt": "2026-09-28T15:21:08.441Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-09-21T14:00:03.775Z",
+      "lastCheckedAt": "2026-09-28T15:21:08.478Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-28T15:21:08.478Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut plans premium lounges at European airports",
+              "url": "https://www.rte.ie/news/business/2026/0813/1587684-revolut-plans-premium-lounges-at-european-airports/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-21T14:00:03.775Z",
           "answer": "No",
@@ -815,13 +829,27 @@
       ]
     },
     "q_mu2088hhirn6x4": {
-      "lastCheckedAt": "2026-09-21T14:00:12.631Z",
-      "lastUpdateAt": "2026-09-21T14:00:12.631Z",
-      "currentAnswer": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
-      "currentSummary": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
+      "lastCheckedAt": "2026-09-28T15:21:11.320Z",
+      "lastUpdateAt": "2026-09-28T15:21:11.320Z",
+      "currentAnswer": "Yes:",
+      "currentSummary": "Yes:",
       "status": "UPDATED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-09-28T15:21:11.320Z",
+          "answer": "Yes:",
+          "summary": "Yes:",
+          "sources": [
+            {
+              "title": "Woody Allen To Start Shooting Next Project In Spain In October",
+              "url": "https://deadline.com/2026/08/woody-allen-spain-film-october-2026-1237048732/"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"Yes: filming will take place mainly in the city centre and also in Aranjuez\" to \"Yes:\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-21T14:00:12.631Z",
           "answer": "Yes: filming will take place mainly in the city centre and also in Aranjuez",
