@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-09-28T15:21:08.441Z"
+    "lastWeeklyRunAt": "2026-10-05T15:55:57.079Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-09-28T15:21:08.478Z",
+      "lastCheckedAt": "2026-10-05T15:55:57.109Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-10-05T15:55:57.109Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut to expand airport lounge network across Europe - FStech",
+              "url": "https://www.fstech.co.uk/fst/Revolut_To_Expand_Airport_Lounge_Network_Across_Europe.php"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-28T15:21:08.478Z",
           "answer": "No",
@@ -829,13 +843,27 @@
       ]
     },
     "q_mu2088hhirn6x4": {
-      "lastCheckedAt": "2026-09-28T15:21:11.320Z",
-      "lastUpdateAt": "2026-09-28T15:21:11.320Z",
-      "currentAnswer": "Yes:",
-      "currentSummary": "Yes:",
+      "lastCheckedAt": "2026-10-05T15:55:59.055Z",
+      "lastUpdateAt": "2026-10-05T15:55:59.055Z",
+      "currentAnswer": "No",
+      "currentSummary": "No",
       "status": "UPDATED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-10-05T15:55:59.055Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Woody Allen's Next Movie Confirms Cast Ahead Of Madrid Filming",
+              "url": "https://deadline.com/2026/10/woody-allen-cast-confirmed-next-film-madrid-filming-1237144252/"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"Yes:\" to \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-09-28T15:21:11.320Z",
           "answer": "Yes:",
