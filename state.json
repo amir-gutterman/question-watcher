@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-10-05T15:55:57.079Z"
+    "lastWeeklyRunAt": "2026-10-12T10:38:58.896Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-10-05T15:55:57.109Z",
+      "lastCheckedAt": "2026-10-12T10:38:58.927Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-10-12T10:38:58.927Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut to expand airport lounge network across Europe - FStech",
+              "url": "https://www.fstech.co.uk/fst/Revolut_To_Expand_Airport_Lounge_Network_Across_Europe.php"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-10-05T15:55:57.109Z",
           "answer": "No",
@@ -843,13 +857,27 @@
       ]
     },
     "q_mu2088hhirn6x4": {
-      "lastCheckedAt": "2026-10-05T15:55:59.055Z",
-      "lastUpdateAt": "2026-10-05T15:55:59.055Z",
-      "currentAnswer": "No",
-      "currentSummary": "No",
+      "lastCheckedAt": "2026-10-12T10:39:01.204Z",
+      "lastUpdateAt": "2026-10-12T10:39:01.204Z",
+      "currentAnswer": "Yes:",
+      "currentSummary": "Yes:",
       "status": "UPDATED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-10-12T10:39:01.204Z",
+          "answer": "Yes:",
+          "summary": "Yes:",
+          "sources": [
+            {
+              "title": "Woody Allen Reveals Madrid-Set Movie Is 'Comedy With Romance, Infidelity'",
+              "url": "https://variety.com/2026/film/global/woody-allen-madrid-movie-comedy-romance-infidelity-1236894760/"
+            }
+          ],
+          "changed": true,
+          "changeReason": "Answer changed from \"No\" to \"Yes:\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-10-05T15:55:59.055Z",
           "answer": "No",
