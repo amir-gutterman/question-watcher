@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-10-12T10:38:58.896Z"
+    "lastWeeklyRunAt": "2026-10-19T15:32:15.564Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-10-12T10:38:58.927Z",
+      "lastCheckedAt": "2026-10-19T15:32:15.871Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-10-19T15:32:15.871Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut plans premium lounges at European airports",
+              "url": "https://www.rte.ie/news/business/2026/0813/1587684-revolut-plans-premium-lounges-at-european-airports/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-10-12T10:38:58.927Z",
           "answer": "No",
