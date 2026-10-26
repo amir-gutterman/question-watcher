@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-10-19T15:32:15.564Z"
+    "lastWeeklyRunAt": "2026-10-26T12:52:09.628Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-10-19T15:32:15.871Z",
+      "lastCheckedAt": "2026-10-26T12:52:09.776Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-10-26T12:52:09.776Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut plans premium lounges at European airports",
+              "url": "https://www.rte.ie/news/business/2026/0813/1587684-revolut-plans-premium-lounges-at-european-airports/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-10-19T15:32:15.871Z",
           "answer": "No",
@@ -484,20 +498,6 @@
           ],
           "changed": false,
           "changeReason": "The underlying fact is unchanged: still no confirmed direct partnership with a Tel Aviv airport lounge, only third-party aggregator access as before.",
-          "errorMessage": null
-        },
-        {
-          "checkedAt": "2026-07-11T19:14:34.565Z",
-          "answer": "Based on current search results, there is no confirmed announcement of Revolut partnering with any airport lounge in Tel Aviv. Revolut offers airport lounge access through third-party aggregators (such as DragonPass/LoungeKey) at Ben Gurion Airport as part of its broader travel benefits, but no new, specific direct partnership with a Tel Aviv lounge has been announced.",
-          "summary": "No confirmed new Revolut–Tel Aviv airport lounge partnership",
-          "sources": [
-            {
-              "title": "Revolut – Airport lounges",
-              "url": "https://www.revolut.com/lounges/"
-            }
-          ],
-          "changed": false,
-          "changeReason": "This is the first time the question has been researched, so there is nothing meaningful to compare against yet.",
           "errorMessage": null
         }
       ]
