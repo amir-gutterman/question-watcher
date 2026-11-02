@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-10-26T12:52:09.628Z"
+    "lastWeeklyRunAt": "2026-11-02T15:38:33.304Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-10-26T12:52:09.776Z",
+      "lastCheckedAt": "2026-11-02T15:38:33.593Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-11-02T15:38:33.593Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut plans premium lounges at European airports",
+              "url": "https://www.rte.ie/news/business/2026/0813/1587684-revolut-plans-premium-lounges-at-european-airports/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-10-26T12:52:09.776Z",
           "answer": "No",
@@ -484,20 +498,6 @@
           "sources": [],
           "changed": false,
           "changeReason": "Initial framing; awaiting search results before finaliz.",
-          "errorMessage": null
-        },
-        {
-          "checkedAt": "2026-07-11T19:23:49.432Z",
-          "answer": "No. My searches found no not I found no no confirmed announcement that Revolut has parted with any airport lounge in Tel Aviv (Ben Gurion Airport). Revolut continues to offer airport lounge access via third-party aggregators (such as DragonAss/Priority Pass/LoungeKey), which can include lounges at Ben Gurion, but no new, specific direct Revolut–Tel Aviv lounge partnership has been announced.",
-          "summary": "No new direct Revolut–Tel Aviv lounge partnership announced",
-          "sources": [
-            {
-              "title": "Revolut airport lounge access",
-              "url": "https://www.revolut.com/en-US/travel/airport-lounges/"
-            }
-          ],
-          "changed": false,
-          "changeReason": "The underlying fact is unchanged: still no confirmed direct partnership with a Tel Aviv airport lounge, only third-party aggregator access as before.",
           "errorMessage": null
         }
       ]
