@@ -1,16 +1,30 @@
 {
   "meta": {
-    "lastWeeklyRunAt": "2026-11-02T15:38:33.304Z"
+    "lastWeeklyRunAt": "2026-11-09T17:24:21.801Z"
   },
   "questions": {
     "q_test1": {
-      "lastCheckedAt": "2026-11-02T15:38:33.593Z",
+      "lastCheckedAt": "2026-11-09T17:24:21.824Z",
       "lastUpdateAt": "2026-07-16T15:22:58.819Z",
       "currentAnswer": "No",
       "currentSummary": "No",
       "status": "UNCHANGED",
       "lastError": null,
       "history": [
+        {
+          "checkedAt": "2026-11-09T17:24:21.824Z",
+          "answer": "No",
+          "summary": "No",
+          "sources": [
+            {
+              "title": "Revolut plans premium lounges at European airports",
+              "url": "https://www.rte.ie/news/business/2026/0813/1587684-revolut-plans-premium-lounges-at-european-airports/"
+            }
+          ],
+          "changed": false,
+          "changeReason": "No change - still \"No\".",
+          "errorMessage": null
+        },
         {
           "checkedAt": "2026-11-02T15:38:33.593Z",
           "answer": "No",
@@ -489,15 +503,6 @@
           "sources": [],
           "changed": false,
           "changeReason": "This is effectively the first substantive research pass and the previous answer was a broken draft fragment, so there is no meaningful new fact to compare against.",
-          "errorMessage": null
-        },
-        {
-          "checkedAt": "2026-07-15T19:27:36.514Z",
-          "answer": ", searches for any recent Revolut–TAviv airport lounge partnership.",
-          "summary": "Checking for a Revolut–Tel Aviv airport lounge partnership.",
-          "sources": [],
-          "changed": false,
-          "changeReason": "Initial framing; awaiting search results before finaliz.",
           "errorMessage": null
         }
       ]
